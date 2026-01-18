@@ -2,6 +2,7 @@
 
 <p align="center">
   <b>The Ultimate Auto-Player for Heartopia</b><br>
+  <b>‼️USE IT AT YOUR OWN RISK‼️</b><br>
   No Python Required • No Configuration • Beginner Friendly
 </p>
 
