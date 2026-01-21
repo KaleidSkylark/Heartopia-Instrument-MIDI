@@ -1,18 +1,14 @@
-<p align="center">
-  <img src="images/ui.png" width="120" alt="Logo">
-</p>
-
-<h1 align="center">Heartopia Instruments MIDI</h1>
+<h1 align="center">Heartopia Instruments MIDI *FREE*</h1>
 
 <p align="center">
   <b>The Ultimate Auto-Player for Heartopia</b><br>
+  <b>‼️USE IT AT YOUR OWN RISK‼️</b><br>
   No Python Required • No Configuration • Beginner Friendly
 </p>
 
 <p align="center">
   <a href="#-features">Features</a> •
   <a href="#-how-to-use">How To Use</a> •
-  <a href="#-download">Download</a>
 </p>
 
 ---
@@ -27,8 +23,7 @@ It features a **Smart Converter** that fixes "whack" MIDI files automatically, e
 ### ✨ Features
 
 * **🚀 Zero Setup:** Just run the `.exe` file. No coding knowledge required.
-* **🧠 Smart AI Conversion:** Automatically fixes songs that are too high (squeaky) or too low (deep).
-* **🎹 Dual Instrument Support:** Works for both **22-Key** and **15-Key** instruments.
+* **🎹 Dual Instrument Support:** Works for both **22-Key Half-Note Enabled** and **15-Key** instruments.
 * **⚡ 100% Admin Control:** Custom Hotkeys (F4, Z, Insert, etc.) work flawlessly inside the game.
 * **🎨 Beautiful UI:** Clean, dark-themed interface that matches the game aesthetic.
 * **🛠️ Pro Tools:** Adjust Speed (0.1x - 10x), Skip Intros, and Loop songs.
@@ -65,8 +60,7 @@ It features a **Smart Converter** that fixes "whack" MIDI files automatically, e
 
 ---
 
-### 📥 Download
-[**Click Here to Download Latest Version**](#)
+### 🤡 For the BOZOZ who can't play instruments [BEST FOR PIANO].
 
 ---
 <p align="center">
