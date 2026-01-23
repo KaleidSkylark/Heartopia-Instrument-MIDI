@@ -1,4 +1,4 @@
-<h1 align="center">Heartopia Instruments V3</h1>
+<h1 align="center">Heartopia Instrument MIDI V3</h1>
 <p align="center">
   <b>The Ultimate Automated Instrument Player for Heartopia</b><br>
   🎵 Smart Queue • ☁️ Community Cloud • 🎨 Modern Web UI
@@ -14,8 +14,8 @@
 
 ### 🎥 Watch the Demo
 <div align="center">
-  <a href="https://youtu.be/GqZZbJU0tyc" target="_blank">
-    <img src="https://img.youtube.com/vi/GqZZbJU0tyc/hqdefault.jpg" alt="Watch the Demo" width="600" style="border-radius: 10px; box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);">
+  <a href="https://www.youtube.com/watch?v=tUdTDZrULIo" target="_blank">
+    <img src="https://img.youtube.com/vi/tUdTDZrULIo/hqdefault.jpg" alt="Watch the Demo" width="600" style="border-radius: 10px; box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);">
   </a>
   <p><i>(Note: Demo video to be updated for V3)</i></p>
 </div>
