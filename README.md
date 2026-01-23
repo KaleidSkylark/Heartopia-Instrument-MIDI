@@ -1,4 +1,5 @@
 <h1 align="center">Heartopia Instruments MIDI V2</h1>
+<h2 align="center">🚧NEW VERSION IS UNDER DEVELOPMENT, WILL BE MORE ACCESSIBLE🚧</h2>
 
 <p align="center">
   <b>The Ultimate Auto-Player for Heartopia</b><br>
