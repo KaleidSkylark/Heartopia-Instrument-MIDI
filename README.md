@@ -70,11 +70,20 @@
 
 **Is this a virus? No.**
 
-If you download the `.exe` , your antivirus (Windows Defender, Avast, etc.) may flag it as a **Trojan** or **Malware**.
+If you download the `.exe`, your antivirus (Windows Defender, Avast, etc.) may flag it as a **Trojan** or **Malware**.
 
 **Why does this happen?**
 1.  **Automation Behavior:** This app uses libraries (`pydirectinput`, `keyboard`) specifically designed to take control of your keyboard to play the instrument. Antivirus software cannot distinguish between a game macro and a malicious program trying to hijack your input.
 2.  **Unsigned Code:** I am an independent developer and do not have a costly digital code-signing certificate. Windows defaults to blocking unsigned apps that interact with system inputs.
+
+* **Option 2 (Safe Workaround - Exclusion Folder):**
+    Instead of turning off your antivirus, you can create a specific folder that your antivirus ignores.
+    1.  Create a new folder on your Desktop/Downloads anywhere (e.g., named `HeartopiaPlayer` or whatever you want).
+    2.  Open **Windows Security** > **Virus & threat protection**.
+    3.  Click **Manage settings**.
+    4.  Scroll down to **Exclusions** and click **Add or remove exclusions**.
+    5.  Click **Add an exclusion** > **Folder** and select the folder you created in Step 1.
+    6.  Download and extract the Heartopia `.exe` into this folder. It will now run without issues while keeping the rest of your PC protected.
 
 ---
 
