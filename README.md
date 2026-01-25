@@ -66,6 +66,18 @@
 
 ---
 
+### ⚠️ Important: Antivirus False Positives
+
+**Is this a virus? No.**
+
+If you download the `.exe` , your antivirus (Windows Defender, Avast, etc.) may flag it as a **Trojan** or **Malware**.
+
+**Why does this happen?**
+1.  **Automation Behavior:** This app uses libraries (`pydirectinput`, `keyboard`) specifically designed to take control of your keyboard to play the instrument. Antivirus software cannot distinguish between a game macro and a malicious program trying to hijack your input.
+2.  **Unsigned Code:** I am an independent developer and do not have a costly digital code-signing certificate. Windows defaults to blocking unsigned apps that interact with system inputs.
+
+---
+
 ### 📖 How to Use
 
 1.  **Launch:** Run the application. A browser window will open with the interface.
