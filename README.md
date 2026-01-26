@@ -6,8 +6,7 @@
 
 <p align="center">
   <a href="#-features">Features</a> •
-  <a href="#-how-to-use">How To Use</a> •
-  <a href="#-download">Download</a>
+  <a href="#-how-to-use">How To Use</a> 
 </p>
 
 ---
@@ -38,6 +37,18 @@
     * **Chord Timing:** (Formerly Snap) Adjust chord precision in milliseconds.
 * **📂 Drag & Drop Converter:** Convert multiple `.mid` files at once with adjustable **Pitch Shift** and **Target Instrument** (22K or 15K).
 * **⚙️ Custom Settings:** Change your song folder path and bind **Play/Stop** to any key you want (Default: F4/F5).
+
+---
+
+### 🛠️ V3.1 Hotfix
+
+* **✅ Sticky Keys / Character Movement:** Fixed an issue where pausing the player and exiting the piano would cause keys to remain "held down," making the character move unintentionally.
+* **✅ Queue Playback Logic:** Fixed a bug where selecting a new song after a pause and pressing Start (F4) would incorrectly resume the *previous* song.
+* **✅ Alt-Tab Safety:** The player now detects when you switch windows (Alt-Tab) or change programs and automatically stops pressing keys to prevent typing elsewhere.
+* **✅ F5 Page Refresh:** Prevented the default browser "Refresh" action when pressing F5. It now correctly functions only as the "Stop" hotkey without reloading the UI.
+
+> **🐛 Encountered a new bug?**
+> If you have an issue not listed here, please **[Create an Issue](../../issues)** in this repository.
 
 ---
 
