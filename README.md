@@ -6,7 +6,8 @@
 
 <p align="center">
   <a href="#-features">Features</a> •
-  <a href="#-how-to-use">How To Use</a> 
+  <a href="#-how-to-use">How To Use</a> •
+  <a href="#-download">Download</a>
 </p>
 
 ---
@@ -29,19 +30,33 @@
 ### ✨ New V3 Features
 
 * **🎨 Modern Web UI:** A responsive, smooth interface with built-in **Light & Dark Themes**.
-* **🎵 Smart Queue System:** Queue up multiple songs to play back-to-back automatically without stopping.
+* **🎵 Smart Queue & Playlist Management:**
+    * Queue up multiple songs to play back-to-back.
+    * **New:** Multi-select songs to delete in batches.
+    * **New:** Filter and Sort your playlist by Name or Upload Date.
 * **☁️ Online Community V3:** Select multiple songs and **Batch Download** them instantly. Upload your own conversions directly through the browser.
+* **📜 Activity Console:** A built-in log that displays real-time app status and actions.
 * **🎛️ Advanced Playback Controls:**
     * **Start at:** Start the song from 0% to 100% (skip intros!).
     * **Loop:** Repeat the current song automatically.
     * **Chord Timing:** (Formerly Snap) Adjust chord precision in milliseconds.
 * **📂 Drag & Drop Converter:** Convert multiple `.mid` files at once with adjustable **Pitch Shift** and **Target Instrument** (22K or 15K).
-* **⚙️ Custom Settings:** Change your song folder path and bind **Play/Stop** to any key you want (Default: F4/F5).
+* **⚙️ Custom Settings:** Change your song folder path and bind **Play/Stop** to **ANY key** on your keyboard (no longer limited to F1-F12).
 
 ---
 
-### 🛠️ V3.1 Hotfix
+### 🛠️ Patch Notes
 
+#### V3.3 Hotfix (Latest)
+* **✅ Expanded Keybinds:** Fixed the settings menu to support **all keyboard keys**. You are no longer restricted to F1-F12 when binding Play/Stop hotkeys.
+* **✅ Playlist Multi-Select:** Added checkboxes to the playlist, allowing you to select multiple local songs and delete them in batches.
+* **✅ Playlist Filters:** Added sorting options to the playlist. You can now filter/sort by **Name** or **Date Added** (Ascending/Descending).
+* **✅ Activity Console:** Added a live "Info Console" to the sidebar that logs app activity and status updates in real-time.
+
+#### V3.2 Hotfix
+* **✅ Playback Speed Bug:** Fixed an issue where restarting a song (F4) after stopping (F5) would reset the speed to **1.0x** internally, even if the UI slider was still set to a custom speed (e.g., 0.8x).
+
+#### V3.1 Hotfix
 * **✅ Sticky Keys / Character Movement:** Fixed an issue where pausing the player and exiting the piano would cause keys to remain "held down," making the character move unintentionally.
 * **✅ Queue Playback Logic:** Fixed a bug where selecting a new song after a pause and pressing Start (F4) would incorrectly resume the *previous* song.
 * **✅ Alt-Tab Safety:** The player now detects when you switch windows (Alt-Tab) or change programs and automatically stops pressing keys to prevent typing elsewhere.
