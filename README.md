@@ -8,10 +8,17 @@
   <a href="#-features">Features</a> •
   <a href="#-how-to-use">How To Use</a> •
   <a href="#-download">Download</a>
+  
 </p>
 
 ---
+<h1 align="center">HeartopiaWiki OS</h1>
 
+<p align="center">
+  <b>HeartopiaWiki OS is a modern, interactive, and data-driven companion web application for the game Heartopia. It serves as a dynamic wiki, calculator, and utility suite, built with a "Glassmorphism" UI design and powered by React, Supabase.</b>
+  <br><br>
+  <a href="https://heartopia-wikios.vercel.app/">Check out our site: Heartopia WikiOS</a>
+</p>
 ### 🎥 Watch the Demo
 <div align="center">
   <a href="https://www.youtube.com/watch?v=tUdTDZrULIo" target="_blank">
