@@ -1,4 +1,4 @@
-<h1 align="center">Heartopia Instrument MIDI V3</h1>
+<h1 align="center">Heartopia Instrument MIDI V3 (UPDATING TO V4)</h1>
 <p align="center">
   <b>The Ultimate Automated Instrument Player for Heartopia</b><br>
   🎵 Smart Queue • ☁️ Community Cloud • 🎨 Modern Web UI
