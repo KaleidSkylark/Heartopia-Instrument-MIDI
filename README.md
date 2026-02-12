@@ -7,7 +7,7 @@
 
 <br>
 
-<h1 align="center">Heartopia Instrument MIDI V5</h1>
+<h1 align="center">Heartopia Instrument MIDI V5 Python Based</h1>
 <p align="center">
   <b>The Ultimate Automated Instrument Player & Assistant for Heartopia</b><br>
   🎵 Studio Editor • 🎹 Visual Piano Roll • 🎮 Game Assist •
@@ -36,7 +36,7 @@
 ---
 
 ### ✨ New V5 Features
-
+**⚠️Heartopia needs to be Foreground/Active in order to work, this uses OpenCV[Auto Cook | Snow Puzzle Solver]⚠️**
 * **🎮 Game Assist Module (NEW):**
     * **Auto Cook:** Uses computer vision to manage 1-4 stoves simultaneously.
     * **Snow Puzzle Bot:** High-speed flawless completion of the snow puzzle mini-game.
