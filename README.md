@@ -1,7 +1,16 @@
-<h1 align="center">Heartopia Instrument MIDI V4</h1>
+<div align="center">
+  <h3>✨ Visit my personal Wiki ✨</h3>
+  <a href="https://heartopia-wikios.vercel.app/">
+    <img src="https://img.shields.io/badge/Heartopia%20Wiki-Visit%20Now-pink?style=for-the-badge" alt="Visit Heartopia Wiki">
+  </a>
+</div>
+
+<br>
+
+<h1 align="center">Heartopia Instrument MIDI V5</h1>
 <p align="center">
-  <b>The Ultimate Automated Instrument Player for Heartopia</b><br>
-  🎵 Studio Editor • 🎹 Visual Piano Roll • ⚡ 60FPS Smooth UI
+  <b>The Ultimate Automated Instrument Player & Assistant for Heartopia</b><br>
+  🎵 Studio Editor • 🎹 Visual Piano Roll • 🎮 Game Assist •
 </p>
 
 <p align="center">
@@ -13,40 +22,36 @@
 
 ### 🎥 Watch the Demo
 <div align="center">
-  <a href="https://www.youtube.com/watch?v=tUdTDZrULIo" target="_blank">
-    <img src="https://img.youtube.com/vi/tUdTDZrULIo/hqdefault.jpg" alt="Watch the Demo" width="600" style="border-radius: 10px; box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);">
+  <a href="https://youtu.be/5TrT5gGk_qg" target="_blank">
+    <img src="https://img.youtube.com/vi/5TrT5gGk_qg/hqdefault.jpg" alt="Watch the Demo" width="600" style="border-radius: 10px; box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);">
   </a>
-  <p><i>(Note: Demo video used is V3)</i></p>
+  <p><i>(Note: Demo video used is V5)</i></p>
 </div>
 
 ---
 
-### 🎹 What is Heartopia V4?
-**Heartopia Instrument MIDI V4** is the next evolution of the classic auto-player. It retains the modern **Web-Based Interface** but has been supercharged with a **Studio Editor**, a **Visual Piano Roll**, and a completely rewritten rendering engine using **WebSockets** for lag-free performance.
+### 🎹 What is Heartopia V5?
+**Heartopia Instrument MIDI V5** is the next evolution of the classic auto-player. It retains the powerful **Studio Editor** and **Visual Piano Roll** from V4 but introduces the all-new **Game Assist** module—a suite of automation tools designed to help with daily tasks like cooking and puzzles using computer vision.
 
 ---
 
-### ✨ New V4 Features
+### ✨ New V5 Features
 
-* **⚡ Real-Time UI (WebSocket Integration):** * We have replaced the old polling system (setInterval) with **Flask-SocketIO**. 
-    * The server now pushes progress updates **60 times a second**, making the progress bar, timer, and visualizers butter-smooth with zero lag.
-* **📝 Studio Editor Tab:**
-    * A full-fledged script editor built right into the app.
-    * **Live Sync:** The text area highlights the exact line of code playing in real-time.
-    * **Click-to-Find:** Click any note in the visualizer to instantly jump to that specific line of code to edit mistakes.
-    * **Quick Inserts:** Easily add delays, notes, or chords without memorizing syntax.
-* **🎹 Audio & Visual Preview (Piano Roll):** * Preview songs before playing them in-game! 
-    * Features a pro-grade **Synthesia-style Visualizer** with lane detection and hit lighting effects.
-* **☁️ Enhanced Online Library:** * **Pagination Added:** Browse thousands of songs without the previous 50-item limit.
-    * **Batch Actions:** Select multiple community songs and download them all at once.
-* **🎵 Smart Queue & Playlist:** Organize your setlist, loop playback, and filter your library by name or date.
-* **📂 Drag & Drop Converter:** Convert multiple `.mid` files at once with adjustable **Pitch Shift** and **Target Instrument** (22K or 15K).
-
+* **🎮 Game Assist Module (NEW):**
+    * **Auto Cook:** Uses computer vision to manage 1-4 stoves simultaneously.
+    * **Snow Puzzle Bot:** High-speed flawless completion of the snow puzzle mini-game.
+    * **Auto Walk & Cam Lock:** Effortless traversal and camera management.
 ---
 
-### 🛠️ Patch Notes
+### 🛠️ Patch Notes History
 
-#### V4.1 Studio Editor Hotfix (Latest)
+#### V5.0 Major Update (Latest)
+* **NEW: Game Assist Tab:** Added a dedicated tab for game automation tools.
+* **NEW: Auto Cooker:** Added image recognition for automatic cooking on multiple stoves.
+* **NEW: Snow Puzzle Solver:** Added an automated solver for the snow mini-game.
+* **Optimization:** Unified the codebase for better stability and performance.
+
+#### V4.1 Studio Editor Hotfix
 * **🚀 Monaco Engine Integration:** Replaced the standard text box with the **Monaco Editor** (the engine powering VS Code).
 * **⚡ Massive Performance Boost:** The editor now supports **1,000,000+ lines** of code with zero lag using virtual scrolling. Fixed issues where files larger than 100k lines would crash the UI.
 * **🎯 Precision Sync Fix:** Fixed an issue where the text highlighter would drift off-sync. It now tracks playback with millisecond precision.
@@ -76,24 +81,26 @@
 ### 📸 App Interface
 
 <div align="center">
-  <table>
-    <tr>
-      <td align="center" width="50%"><b>🎵 Visual Piano Roll (V4)</b></td>
-      <td align="center" width="50%"><b>📝 Studio Editor (V4)</b></td>
-    </tr>
-    <tr>
-      <td><img src="images/v4_visualizer.png" width="100%" alt="Visualizer"></td>
-      <td><img src="images/v4_editor.png" width="100%" alt="Studio Editor"></td>
-    </tr>
-    <tr>
-      <td align="center"><b>☁️ Online Cloud Library</b></td>
-      <td align="center"><b>📂 Batch Converter</b></td>
-    </tr>
-    <tr>
-      <td><img src="images/v3_online.png" width="100%" alt="Online Cloud"></td>
-      <td><img src="images/v3_converter.png" width="100%" alt="Converter"></td>
-    </tr>
-  </table>
+  <h3>🎮 Game Assist (New)</h3>
+  <img src="images/v5_assist.png" width="800" alt="Assist Tab" style="border-radius: 10px; margin-bottom: 20px;">
+
+  <h3>🎵 Playlist & Visuals</h3>
+  <img src="images/v5_playlistvisuals.png" width="800" alt="Playlist Tab" style="border-radius: 10px; margin-bottom: 20px;">
+
+  <h3>📝 Studio Editor</h3>
+  <img src="images/v5_studioeditor.png" width="800" alt="Editor Tab" style="border-radius: 10px; margin-bottom: 20px;">
+
+  <h3>☁️ Online Cloud Library</h3>
+  <img src="images/v5_online.png" width="800" alt="Online Tab" style="border-radius: 10px; margin-bottom: 20px;">
+
+  <h3>🎹 Converter</h3>
+  <img src="images/v5_convert.png" width="800" alt="Convert Tab" style="border-radius: 10px; margin-bottom: 20px;">
+
+  <h3>⚙️ Settings</h3>
+  <img src="images/v5_settings.png" width="800" alt="Settings Tab" style="border-radius: 10px; margin-bottom: 20px;">
+
+  <h3>❓ Information</h3>
+  <img src="images/v5_info.png" width="800" alt="Info Tab" style="border-radius: 10px; margin-bottom: 20px;">
 </div>
 
 ---
@@ -105,7 +112,7 @@
 If you download the `.exe`, your antivirus (Windows Defender, Avast, etc.) may flag it as a **Trojan** or **Malware**.
 
 **Why does this happen?**
-1.  **Automation Behavior:** This app uses libraries (`pydirectinput`) designed to take control of your keyboard. Antivirus software often mistakes this for malicious behavior.
+1.  **Automation Behavior:** This app uses libraries (`pydirectinput`, `pyautogui`) designed to take control of your keyboard and mouse. Antivirus software often mistakes this for malicious behavior.
 2.  **Unsigned Code:** As an independent developer, I do not have a digital code-signing certificate.
 
 * **Safe Workaround - Exclusion Folder:**
@@ -122,8 +129,8 @@ If you download the `.exe`, your antivirus (Windows Defender, Avast, etc.) may f
 2.  **Get Songs**:
     * **☁️ Online Tab:** Search for songs, use the new **Next/Prev** buttons to browse pages, and download.
     * **🎹 Add / Convert Tab:** Drag and drop `.mid` files and click **Convert**.
-3.  **Edit (Optional):**
-    * Go to **Studio Editor**, select a song, and use the Visualizer to find and fix mistakes.
+3.  **Assist (V5)**:
+    * Go to the **Assist** tab, connect to the game window, and toggle features like **Auto Cook** or **Auto Walk**.
 4.  **Play**:
     * Go to **Playlist**, add songs to **Queue**.
     * Press **Start (Default: F4)** to begin playing.
