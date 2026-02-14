@@ -4,7 +4,10 @@
     <img src="https://img.shields.io/badge/Heartopia%20Wiki-Visit%20Now-pink?style=for-the-badge" alt="Visit Heartopia Wiki">
   </a>
 </div>
-
+<br>
+<div align="center">
+  <h4>🚧Currently looking for Audio to MIDI, I've already found a very good one. But I'm trying to recreate one myself :D if very practical🚧</h4>
+</div>
 <br>
 
 <h1 align="center">Heartopia Instrument MIDI V5 Python Based</h1>
