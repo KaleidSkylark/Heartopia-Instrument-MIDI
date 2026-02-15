@@ -6,8 +6,12 @@
 </div>
 
 <br>
-
-<h1 align="center">Heartopia Instrument MIDI V5</h1>
+<br>
+<div align="center">
+  <h4>🚧Currently looking for Audio to MIDI, I've already found a very good one. But I'm trying to recreate one myself :D if very practical🚧</h4>
+</div>
+<br>
+<h1 align="center">Heartopia Instrument MIDI V5.1</h1>
 <p align="center">
   <b>The Ultimate Automated Instrument Player & Assistant for Heartopia</b><br>
   🎵 Studio Editor • 🎹 Visual Piano Roll • 🎮 Game Assist •
@@ -45,7 +49,14 @@
 
 ### 🛠️ Patch Notes History
 
-#### V5.0 Major Update (Latest)
+#### V5.1 Hotfix & Improvements (Latest)
+* **✅ FileName Support:** Removed strict naming restrictions on uploads that is causing for Upload Issues.
+* **✅ Increased Upload Limit:** Boosted the online upload limit from 200KB to **500KB** to support larger, more complex song scripts.
+* **✅ Smart Pagination:** Added a custom "Per Page" selector (50/100/200/300) to the Online tab. Your preference is saved automatically to `config.json`.
+* **✅ Batch Delete Fixed:** Fixed a critical bug where checking multiple songs in the Playlist and clicking "Delete Selected" would fail due to filename formatting issues.
+* **✅ Download Stability:** Implemented `clean_filename` sanitization. Downloads with illegal OS characters or missing extensions are now automatically fixed, preventing "Add to Playlist" failures.
+
+#### V5.0 Major Update
 * **NEW: Game Assist Tab:** Added a dedicated tab for game automation tools.
 * **NEW: Auto Cooker:** Added image recognition for automatic cooking on multiple stoves.
 * **NEW: Snow Puzzle Solver:** Added an automated solver for the snow mini-game.
