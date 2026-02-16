@@ -115,6 +115,28 @@
 
 ---
 
+### ⚠️ Important Reminders & Requirements
+
+> Please read carefully before using V5.
+
+* 🖥️ **Fullscreen Limitation:**  
+  The app **IS NOT INTENDED TO WORK ON Fullscreen mode only WINDOWED MODE**.  
+  → If features fail, **Run as Administrator**.
+
+* 🎯 **Image Recognition Setup Required:**  
+  The Game Assist features (Auto Cook / Snow Puzzle Solver) use **pixel-by-pixel OpenCV detection**.  
+  Since **every monitor and resolution has slightly different pixel values**, you must:
+  - Create and use **your own reference images**
+  - Capture them directly from **your own game screen**
+  
+  Using someone else’s images may cause detection failures.
+
+* ⏱️ Slow Music Start?  
+  If music takes too long to begin playing:
+  - Adjust the **DELAY** value in Studio Editor  
+  - Remove it Or set it to **0** if unnecessary
+
+---
 ### ⚠️ Important: Antivirus False Positives
 
 **Is this a virus? No.**
