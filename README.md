@@ -13,7 +13,7 @@
 <h1 align="center">Heartopia Instrument MIDI V5</h1>
 <p align="center">
   <b>The Ultimate Automated Instrument Player & Assistant for Heartopia</b><br>
-  🎵 Studio Editor • 🎹 Visual Piano Roll • 🎮 Game Assist •
+  🐍 Python Based • 🤖 Made with AI • 🎵 Studio Editor • 🎹 Visual Piano Roll • 🎮 Game Assist
 </p>
 
 <p align="center">
@@ -34,7 +34,7 @@
 ---
 
 ### 🎹 What is Heartopia V5?
-**Heartopia Instrument MIDI V5** is the next evolution of the classic auto-player. It retains the powerful **Studio Editor** and **Visual Piano Roll** from V4 but introduces the all-new **Game Assist** module—a suite of automation tools designed to help with daily tasks like cooking and puzzles using computer vision.
+**Heartopia Instrument MIDI V5** is a sophisticated **Python-based** application developed with the assistance of **Generative AI**. It represents the next evolution of the classic auto-player, retaining the powerful **Studio Editor** and **Visual Piano Roll** from V4 while introducing the all-new **Game Assist** module—a suite of automation tools designed to help with daily tasks like cooking and puzzles using computer vision.
 
 ---
 
@@ -48,7 +48,13 @@
 
 ### 🛠️ Patch Notes History
 
-#### V5.1 Hotfix & Improvements (Latest)
+#### V5.2 Converter Intelligence Update (Latest)
+* **✅ 15K Smart Pitch Folding:** Implemented intelligent note folding logic specifically for 15-key songs. Notes that fall outside the playable range now automatically wrap into the valid scale instead of being deleted.
+* **✅ Zero Dropped Notes:** Every single note from the source MIDI is now preserved and played. This ensures 15K songs match the rhythmic density and "fullness" of the 22K versions.
+* **✅ 15K Sync Fix:** Switched 15K conversion to a "Tap Mode" logic. This eliminates "ghost notes" and de-sync issues caused by conflicting sustain durations in the previous engine.
+* **✅ Smart Quantization:** "Black key" (accidental) notes now snap intelligently to their nearest valid physical key rather than being discarded.
+
+#### V5.1 Hotfix & Improvements
 * **✅ FileName Support:** Removed strict naming restrictions on uploads that is causing for Upload Issues.
 * **✅ Increased Upload Limit:** Boosted the online upload limit from 200KB to **500KB** to support larger, more complex song scripts.
 * **✅ Smart Pagination:** Added a custom "Per Page" selector (50/100/200/300) to the Online tab. Your preference is saved automatically to `config.json`.
@@ -115,6 +121,26 @@
 
 ---
 
+### ⚠️ Important Reminders & Requirements
+
+> Please read carefully before using V5.
+
+* 🖥️ **Fullscreen Limitation:** The app **IS NOT INTENDED TO WORK ON Fullscreen mode only WINDOWED MODE**.  
+  → If features fail, **Run as Administrator**.
+
+* 🎯 **Image Recognition Setup Required:** The Game Assist features (Auto Cook / Snow Puzzle Solver) use **pixel-by-pixel OpenCV detection**.  
+  Since **every monitor and resolution has slightly different pixel values**, you must:
+  - Create and use **your own reference images**
+  - Capture them directly from **your own game screen**
+  
+  Using someone else’s images may cause detection failures.
+
+* ⏱️ Slow Music Start?  
+  If music takes too long to begin playing:
+  - Adjust the **DELAY** value in Studio Editor  
+  - Remove it Or set it to **0** if unnecessary
+
+---
 ### ⚠️ Important: Antivirus False Positives
 
 **Is this a virus? No.**
