@@ -1,42 +1,50 @@
-<h1 align="center">Heartopia Instrument MIDI V5</h1>
+
+<h1 align="center">Heartopia Instrument MIDI V6</h1>
 <p align="center">
   <b>The Ultimate Automated Instrument Player & Assistant for Heartopia</b><br>
-  🐍 Python Based • 🤖 Made with AI • 🎵 Studio Editor • 🎹 Visual Piano Roll • 🎮 Game Assist
+  🐍 Python Based • 🤖 Made with AI • 🎵 Studio Editor • 🎹 Visual Piano Roll
 </p>
 
 <p align="center">
   <a href="#-features">Features</a> •
-  <a href="#-how-to-use">How To Use</a> •
+  <a href="#-how-to-use">How To Use</a>
 </p>
-
----
 
 ### 🎥 Watch the Demo
 <div align="center">
   <a href="https://youtu.be/5TrT5gGk_qg" target="_blank">
     <img src="https://img.youtube.com/vi/5TrT5gGk_qg/hqdefault.jpg" alt="Watch the Demo" width="600" style="border-radius: 10px; box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);">
   </a>
-  <p><i>(Note: Demo video used is V5)</i></p>
+  <p><i>(Note: Demo video used is an older version)</i></p>
 </div>
 
 ---
 
-### 🎹 What is Heartopia V5?
-**Heartopia Instrument MIDI V5** is a sophisticated **Python-based** application developed with the assistance of **Generative AI**. It represents the next evolution of the classic auto-player, retaining the powerful **Studio Editor** and **Visual Piano Roll** from V4 while introducing the all-new **Game Assist** module—a suite of automation tools designed to help with daily tasks like cooking and puzzles using computer vision.
+### 🎹 What is Heartopia V6?
+**Heartopia Instrument MIDI V6** is a sophisticated **Python-based** application developed with the assistance of **Generative AI**. It represents the ultimate, streamlined evolution of the auto-player. It retains the powerful **Studio Editor** and **Visual Piano Roll** from previous versions but now features a gorgeous new **Amoled Neon UI**, lightning-fast performance, and a completely debloated core after removing the Game Assist features.
 
 ---
 
-### ✨ New V5 Features
-**⚠️Heartopia needs to be Foreground/Active in order to work, this uses OpenCV[Auto Cook | Snow Puzzle Solver]⚠️**
-* **🎮 Game Assist Module (NEW):**
-    * **Auto Cook:** Uses computer vision to manage 1-4 stoves simultaneously.
-    * **Snow Puzzle Bot:** High-speed flawless completion of the snow puzzle mini-game.
-    * **Auto Walk & Cam Lock:** Effortless traversal and camera management.
+### ✨ Core Features
+**⚠️Heartopia needs to be Foreground/Active in order to work⚠️**
+* **🎵 Auto-Player:** Plays complex MIDI scripts perfectly using custom keyboard emulation.
+* **📝 Studio Editor:** Monaco-powered code editor to edit and sync 1,000,000+ line MIDI scripts.
+* **🎹 Visual Piano Roll:** Live visualizer tracking your code lines in real-time.
+* **☁️ Community Cloud:** Search, download, and upload scripts directly from the app.
+
 ---
 
 ### 🛠️ Patch Notes History
 
-#### V5.2 Converter Intelligence Update (Latest)
+#### V6.0 Optimization & UI Overhaul (Latest)
+* **✅ Storage & Performance Optimization:** Completely removed the Game Assist tab and its heavy OpenCV dependencies. The app size has been reduced from 86MB down to just 24MB!
+* **✅ Amoled Neon UI:** The entire interface has been redesigned with a gorgeous Amoled Neon aesthetic.
+* **✅ Console Log Stretch:** Improved UI layout allows the console log to stretch and fit beautifully on your screen.
+* **✅ Playlist Filters:** Changed the default playlist filters to make organizing your songs easier.
+* **✅ Expanded Information Tab:** Added new resources and links for External Game Mods.
+* **✅ Audio to MIDI Converter:** Added a recommendation and link for the *eldoraudio Piano Audio to MIDI Converter* in the Info Tab (Note: this tool converts much better if the audio is a Piano Cover or Synthesia).
+
+#### V5.2 Converter Intelligence Update 
 * **✅ 15K Smart Pitch Folding:** Implemented intelligent note folding logic specifically for 15-key songs. Notes that fall outside the playable range now automatically wrap into the valid scale instead of being deleted.
 * **✅ Zero Dropped Notes:** Every single note from the source MIDI is now preserved and played. This ensures 15K songs match the rhythmic density and "fullness" of the 22K versions.
 * **✅ 15K Sync Fix:** Switched 15K conversion to a "Tap Mode" logic. This eliminates "ghost notes" and de-sync issues caused by conflicting sustain durations in the previous engine.
@@ -85,26 +93,23 @@
 ### 📸 App Interface
 
 <div align="center">
-  <h3>🎮 Game Assist (New)</h3>
-  <img src="images/v5_assist.png" width="800" alt="Assist Tab" style="border-radius: 10px; margin-bottom: 20px;">
-
   <h3>🎵 Playlist & Visuals</h3>
-  <img src="images/v5_playlistvisuals.png" width="800" alt="Playlist Tab" style="border-radius: 10px; margin-bottom: 20px;">
+  <img src="images/v6_playlistvisuals.png" width="800" alt="Playlist Tab" style="border-radius: 10px; margin-bottom: 20px;">
 
   <h3>📝 Studio Editor</h3>
-  <img src="images/v5_studioeditor.png" width="800" alt="Editor Tab" style="border-radius: 10px; margin-bottom: 20px;">
+  <img src="images/v6_studioeditor.png" width="800" alt="Editor Tab" style="border-radius: 10px; margin-bottom: 20px;">
 
   <h3>☁️ Online Cloud Library</h3>
-  <img src="images/v5_online.png" width="800" alt="Online Tab" style="border-radius: 10px; margin-bottom: 20px;">
+  <img src="images/v6_online.png" width="800" alt="Online Tab" style="border-radius: 10px; margin-bottom: 20px;">
 
   <h3>🎹 Converter</h3>
-  <img src="images/v5_convert.png" width="800" alt="Convert Tab" style="border-radius: 10px; margin-bottom: 20px;">
+  <img src="images/v6_convert.png" width="800" alt="Convert Tab" style="border-radius: 10px; margin-bottom: 20px;">
 
   <h3>⚙️ Settings</h3>
-  <img src="images/v5_settings.png" width="800" alt="Settings Tab" style="border-radius: 10px; margin-bottom: 20px;">
+  <img src="images/v6_settings.png" width="800" alt="Settings Tab" style="border-radius: 10px; margin-bottom: 20px;">
 
   <h3>❓ Information</h3>
-  <img src="images/v5_info.png" width="800" alt="Info Tab" style="border-radius: 10px; margin-bottom: 20px;">
+  <img src="images/v6_info.png" width="800" alt="Info Tab" style="border-radius: 10px; margin-bottom: 20px;">
 </div>
 
 ---
@@ -131,11 +136,9 @@ If you download the `.exe`, your antivirus (Windows Defender, Avast, etc.) may f
 
 1.  **Launch:** Run the application. A browser window will open automatically.
 2.  **Get Songs**:
-    * **☁️ Online Tab:** Search for songs, use the new **Next/Prev** buttons to browse pages, and download.
+    * **☁️ Online Tab:** Search for songs, use the **Next/Prev** buttons to browse pages, and download.
     * **🎹 Add / Convert Tab:** Drag and drop `.mid` files and click **Convert**.
-3.  **Assist (V5)**:
-    * Go to the **Assist** tab, connect to the game window, and toggle features like **Auto Cook** or **Auto Walk**.
-4.  **Play**:
+3.  **Play**:
     * Go to **Playlist**, add songs to **Queue**.
     * Press **Start (Default: F4)** to begin playing.
     * Press **Stop (Default: F5)** to halt.
