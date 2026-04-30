@@ -1,15 +1,10 @@
 
 <div align="center">
-
-  <h3>✨ Visit my personal Wiki [Updated except Codes]✨</h3>
-
-  <a href="https://heartopia-wikios.vercel.app/">
-
-    <img src="https://img.shields.io/badge/Heartopia%20Wiki-Visit%20Now-pink?style=for-the-badge" alt="Visit Heartopia Wiki">
-
-  </a>
-
+  <h3>✨ Visit my personal Wiki ✨ [UPDATED except codes]</h3>
+  <a href="https://heartopia-wikios.vercel.app/"><img src="https://img.shields.io/badge/Heartopia%20Wiki-Visit%20Now-pink?style=for-the-badge" alt="Visit Heartopia Wiki"></a>
 </div>
+<br>
+
 <h1 align="center">Heartopia Instrument MIDI V6</h1>
 <p align="center">
   <b>The Ultimate Automated Instrument Player & Assistant for Heartopia</b><br>
