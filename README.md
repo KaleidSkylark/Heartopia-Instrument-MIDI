@@ -1,13 +1,13 @@
 
 <div align="center">
-  <h3>✨ Visit my personal Wiki ✨ [CURRENLTY UPDATING]</h3>
+  <h3>✨ Visit my personal Wiki ✨</h3>
   <a href="https://heartopia-wikios.vercel.app/"><img src="https://img.shields.io/badge/Heartopia%20Wiki-Visit%20Now-pink?style=for-the-badge" alt="Visit Heartopia Wiki"></a>
 </div>
 <br>
 
-<h1 align="center">Heartopia Instrument MIDI V6</h1>
+<h1 align="center">PianiPia V6</h1>
 <p align="center">
-  <b>The Ultimate Automated Instrument Player & Assistant for Heartopia</b><br>
+  <b>The Ultimate Automated Instrument Player for Heartopia</b><br>
   🐍 Python Based • 🤖 Made with AI • 🎵 Studio Editor • 🎹 Visual Piano Roll
 </p>
 
@@ -26,8 +26,8 @@
 
 ---
 
-### 🎹 What is Heartopia V6?
-**Heartopia Instrument MIDI V6** is a sophisticated **Python-based** application developed with the assistance of **Generative AI**. It represents the ultimate, streamlined evolution of the auto-player. It retains the powerful **Studio Editor** and **Visual Piano Roll** from previous versions but now features a gorgeous new **Amoled Neon UI**, lightning-fast performance, and a completely debloated core after removing the Game Assist features.
+### 🎹 What is PianiPia V6?
+**PianiPia V6** is a sophisticated **Python-based** application developed with the assistance of **Generative AI**. It represents the ultimate, streamlined evolution of the auto-player. It retains the powerful **Studio Editor** and **Visual Piano Roll** from previous versions but now features a gorgeous new **Amoled Neon UI**, lightning-fast performance, and a completely debloated core after removing the Game Assist features.
 
 ---
 
@@ -131,9 +131,9 @@ If you download the `.exe`, your antivirus (Windows Defender, Avast, etc.) may f
 2.  **Unsigned Code:** As an independent developer, I do not have a digital code-signing certificate.
 
 * **Safe Workaround - Exclusion Folder:**
-    1.  Create a folder named `HeartopiaPlayer`.
+    1.  Create a folder named `PianiPiaPlayer`.
     2.  Open **Windows Security** > **Virus & threat protection** > **Manage settings** > **Exclusions**.
-    3.  Add the `HeartopiaPlayer` folder to exclusions.
+    3.  Add the `PianiPiaPlayer` folder to exclusions.
     4.  Extract the app there. It will run without issues.
 
 ---
