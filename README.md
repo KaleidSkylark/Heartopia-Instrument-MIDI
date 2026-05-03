@@ -5,7 +5,7 @@
 </div>
 <br>
 
-<h1 align="center">Heartopia Instrument MIDI V6</h1>
+<h1 align="center">PianiPia V6</h1>
 <p align="center">
   <b>The Ultimate Automated Instrument Player & Assistant for Heartopia</b><br>
   🐍 Python Based • 🤖 Made with AI • 🎵 Studio Editor • 🎹 Visual Piano Roll
@@ -26,8 +26,8 @@
 
 ---
 
-### 🎹 What is Heartopia V6?
-**Heartopia Instrument MIDI V6** is a sophisticated **Python-based** application developed with the assistance of **Generative AI**. It represents the ultimate, streamlined evolution of the auto-player. It retains the powerful **Studio Editor** and **Visual Piano Roll** from previous versions but now features a gorgeous new **Amoled Neon UI**, lightning-fast performance, and a completely debloated core after removing the Game Assist features.
+### 🎹 What is PianiPia V6?
+**PianiPia V6** is a sophisticated **Python-based** application developed with the assistance of **Generative AI**. It represents the ultimate, streamlined evolution of the auto-player. It retains the powerful **Studio Editor** and **Visual Piano Roll** from previous versions but now features a gorgeous new **Amoled Neon UI**, lightning-fast performance, and a completely debloated core after removing the Game Assist features.
 
 ---
 
@@ -100,22 +100,22 @@
 
 <div align="center">
   <h3>🎵 Playlist & Visuals</h3>
-  <img src="images/v6_playlistvisuals.png" width="800" alt="Playlist Tab" style="border-radius: 10px; margin-bottom: 20px;">
+  <img src="images/pianipiav6_playlistvisuals.png" width="800" alt="Playlist Tab" style="border-radius: 10px; margin-bottom: 20px;">
 
   <h3>📝 Studio Editor</h3>
-  <img src="images/v6_studioeditor.png" width="800" alt="Editor Tab" style="border-radius: 10px; margin-bottom: 20px;">
+  <img src="images/pianipiav6_studioeditor.png" width="800" alt="Editor Tab" style="border-radius: 10px; margin-bottom: 20px;">
 
   <h3>☁️ Online Cloud Library</h3>
-  <img src="images/v6_online.png" width="800" alt="Online Tab" style="border-radius: 10px; margin-bottom: 20px;">
+  <img src="images/pianipiav6_online.png" width="800" alt="Online Tab" style="border-radius: 10px; margin-bottom: 20px;">
 
   <h3>🎹 Converter</h3>
-  <img src="images/v6_convert.png" width="800" alt="Convert Tab" style="border-radius: 10px; margin-bottom: 20px;">
+  <img src="images/pianipiav6_convert.png" width="800" alt="Convert Tab" style="border-radius: 10px; margin-bottom: 20px;">
 
   <h3>⚙️ Settings</h3>
-  <img src="images/v6_settings.png" width="800" alt="Settings Tab" style="border-radius: 10px; margin-bottom: 20px;">
+  <img src="images/pianipiav6_settings.png" width="800" alt="Settings Tab" style="border-radius: 10px; margin-bottom: 20px;">
 
   <h3>❓ Information</h3>
-  <img src="images/v6_info.png" width="800" alt="Info Tab" style="border-radius: 10px; margin-bottom: 20px;">
+  <img src="images/pianipiav6_info.png" width="800" alt="Info Tab" style="border-radius: 10px; margin-bottom: 20px;">
 </div>
 
 ---
@@ -131,9 +131,9 @@ If you download the `.exe`, your antivirus (Windows Defender, Avast, etc.) may f
 2.  **Unsigned Code:** As an independent developer, I do not have a digital code-signing certificate.
 
 * **Safe Workaround - Exclusion Folder:**
-    1.  Create a folder named `HeartopiaPlayer`.
+    1.  Create a folder named `PianiPiaPlayer`.
     2.  Open **Windows Security** > **Virus & threat protection** > **Manage settings** > **Exclusions**.
-    3.  Add the `HeartopiaPlayer` folder to exclusions.
+    3.  Add the `PianiPiaPlayer` folder to exclusions.
     4.  Extract the app there. It will run without issues.
 
 ---
