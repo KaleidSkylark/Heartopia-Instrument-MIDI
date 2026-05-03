@@ -7,7 +7,7 @@
 
 <h1 align="center">PianiPia V6</h1>
 <p align="center">
-  <b>The Ultimate Automated Instrument Player for Heartopia</b><br>
+  <b>The Ultimate Automated Piano Player for Heartopia</b><br>
   🐍 Python Based • 🤖 Made with AI • 🎵 Studio Editor • 🎹 Visual Piano Roll
 </p>
 
@@ -18,10 +18,10 @@
 
 ### 🎥 Watch the Demo
 <div align="center">
-  <a href="https://youtu.be/5TrT5gGk_qg" target="_blank">
-    <img src="https://img.youtube.com/vi/5TrT5gGk_qg/hqdefault.jpg" alt="Watch the Demo" width="600" style="border-radius: 10px; box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);">
+  <a href="https://youtu.be/tteFOOMR9X4" target="_blank">
+    <img src="https://img.youtube.com/vi/tteFOOMR9X4/hqdefault.jpg" alt="Watch the Demo" width="600" style="border-radius: 10px; box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);">
   </a>
-  <p><i>(Note: Demo video used is an older version)</i></p>
+  <p><i>(Note: PianiPiaV6)</i></p>
 </div>
 
 ---
