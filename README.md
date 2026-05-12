@@ -1,6 +1,6 @@
 
 <div align="center">
-  <h3>✨ Visit my personal Wiki ✨</h3>
+  <h3>✨ Visit my personal Wiki ✨.</h3>
   <a href="https://heartopia-wikios.vercel.app/"><img src="https://img.shields.io/badge/Heartopia%20Wiki-Visit%20Now-pink?style=for-the-badge" alt="Visit Heartopia Wiki"></a>
 </div>
 <br>
