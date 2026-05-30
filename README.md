@@ -5,7 +5,7 @@
 </div>
 <br>
 
-<h1 align="center">PianiPia V6</h1>
+<h1 align="center">PianiPia V6 [🚧V7 is currently is the process, integrating it with PckyDev/Heartopia-Image-Painter hopefully it works🚧]</h1>
 <p align="center">
   <b>The Ultimate Automated Piano Player for Heartopia</b><br>
   🐍 Python Based • 🤖 Made with AI • 🎵 Studio Editor • 🎹 Visual Piano Roll
