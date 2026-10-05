@@ -1,155 +1,225 @@
-
 <div align="center">
-  <h3>✨ Visit my personal Wiki ✨.</h3>
+  <h3>✨ Visit my personal Wiki ✨</h3>
   <a href="https://heartopia-wikios.vercel.app/"><img src="https://img.shields.io/badge/Heartopia%20Wiki-Visit%20Now-pink?style=for-the-badge" alt="Visit Heartopia Wiki"></a>
 </div>
 <br>
 
-<h1 align="center">PianiPia V6 </h1>
+<h1 align="center">PianiPia (Open Source)</h1>
 <p align="center">
-  <b>The Ultimate Automated Piano Player for Heartopia</b><br>
-  🐍 Python Based • 🤖 Made with AI • 🎵 Studio Editor • 🎹 Visual Piano Roll
+  <b>The Ultimate Automated Piano Player & Assist Suite for Heartopia</b><br>
+  🔓 Open Source • 🐍 Python Based • 🤖 Made with AI • 🎵 Studio Editor • 🎹 Visual Piano Roll • ✨ Game Assist
 </p>
 
 <p align="center">
-  <a href="#-features">Features</a> •
-  <a href="#-how-to-use">How To Use</a>
+  <img src="https://img.shields.io/badge/Python-3.10+-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python Version">
+  <img src="https://img.shields.io/badge/Platform-Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white" alt="Windows">
+  <img src="https://img.shields.io/badge/License-Open%20Source-brightgreen?style=for-the-badge" alt="Open Source">
 </p>
+
+<p align="center">
+  <a href="#-versions-overview">Versions (V6 vs V7)</a> •
+  <a href="#-running-from-source">Run from Source</a> •
+  <a href="#-features">Features</a> •
+  <a href="#-how-to-use">How To Use</a> •
+  <a href="#-repository-structure">Structure</a>
+</p>
+
+---
 
 ### 🎥 Watch the Demo
 <div align="center">
   <a href="https://youtu.be/tteFOOMR9X4" target="_blank">
     <img src="https://img.youtube.com/vi/tteFOOMR9X4/hqdefault.jpg" alt="Watch the Demo" width="600" style="border-radius: 10px; box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);">
   </a>
-  <p><i>(Note: PianiPiaV6)</i></p>
+  <p><i>(Watch PianiPia in action)</i></p>
 </div>
 
 ---
 
-### 🎹 What is PianiPia V6?
-**PianiPia V6** is a sophisticated **Python-based** application developed with the assistance of **Generative AI**. It represents the ultimate, streamlined evolution of the auto-player. It retains the powerful **Studio Editor** and **Visual Piano Roll** from previous versions but now features a gorgeous new **Amoled Neon UI**, lightning-fast performance, and a completely debloated core after removing the Game Assist features.
+### 🚀 Now Fully Open Source!
+
+PianiPia is now **100% open source**! You can inspect every line of code, run directly from Python without relying on pre-packaged executables (avoiding antivirus false positives entirely), customize shortcuts, or build your own custom distributions.
+
+---
+
+### 📦 Versions Overview: V6 vs V7
+
+This repository contains both **V6** and **V7** source trees:
+
+| Version | Focus | Included Features |
+| :--- | :--- | :--- |
+| **[V6](V6/)** | **Ultra-Lightweight & Focused** | • Complete MIDI Player & visual piano roll<br>• Monaco Studio Editor (1M+ lines)<br>• Community Cloud (upload/download)<br>• 22K & 15K MIDI converter<br>• Fully debloated (no OpenCV or bot dependencies) |
+| **[V7](V7/)** | **Full Automation & Assist Suite** | • Everything in V6, **plus** the complete in-game **Assist System**:<br>  - 🚶 Auto Walk & 📷 Cam Lock<br>  - 👨‍🍳 Auto Cook (visual heat detection)<br>  - ❄️ Snow Puzzle Mini-Game Solver<br>  - 🚜 Auto Harvest (Hold & Spam modes)<br>  - 🦘 Auto Jump<br>  - 🎣 Fish Automation & 🛠️ Build Glitch trigger |
+
+---
+
+### 💻 Running from Source
+
+You can run PianiPia directly using Python on Windows:
+
+#### 1. Prerequisites
+- **Python 3.10 or higher** installed ([python.org](https://www.python.org/downloads/))
+- During Python installation, ensure **"Add python.exe to PATH"** is checked.
+
+#### 2. Clone the Repository
+```bash
+git clone https://github.com/KaleidSkylark/Heartopia-Instrument-MIDI.git
+cd Heartopia-Instrument-MIDI
+```
+
+#### 3. Create & Activate a Virtual Environment
+```bash
+python -m venv venv
+venv\Scripts\activate
+```
+
+#### 4. Install Dependencies
+
+**For V6 (Lightweight Music Player):**
+```bash
+pip install flask flask-socketio simple-websocket pydirectinput mido supabase
+```
+
+**For V7 (Full Suite with Game Assist):**
+```bash
+pip install flask flask-socketio simple-websocket pydirectinput pyautogui pynput pillow mido supabase
+```
+
+#### 5. Launch the Application
+
+- **To run PianiPia V6:**
+  ```bash
+  python V6/PianiPiaV6.py
+  ```
+
+- **To run PianiPia V7:**
+  ```bash
+  python V7/PianiPiaV7.py
+  ```
+
+Your default web browser will automatically open to `http://127.0.0.1:5000` with the UI ready to go!
+
+---
+
+### 🏗️ Building Executables (.exe)
+
+If you want to package the app into a standalone `.exe`:
+
+```bash
+pip install pyinstaller
+```
+
+Run the build script provided in `V6/`:
+```bash
+cd V6
+build_bot_modular.bat
+```
 
 ---
 
 ### ✨ Core Features
-**⚠️Heartopia needs to be Foreground/Active in order to work⚠️**
-* **🎵 Auto-Player:** Plays complex MIDI scripts perfectly using custom keyboard emulation.
-* **📝 Studio Editor:** Monaco-powered code editor to edit and sync 1,000,000+ line MIDI scripts.
-* **🎹 Visual Piano Roll:** Live visualizer tracking your code lines in real-time.
-* **☁️ Community Cloud:** Search, download, and upload scripts directly from the app.
+
+> ⚠️ **Note:** Heartopia needs to be foreground/active for key simulation to register in-game. Run as Administrator if keystrokes are blocked.
+
+* **🎵 Accurate Auto-Player:** Plays complex multi-track MIDI scripts using direct keyboard emulation.
+* **📝 Monaco Studio Editor:** VS Code's Monaco engine built-in. Smoothly edits 1,000,000+ line MIDI scripts with real-time cursor sync.
+* **🎹 Visual Piano Roll:** Live interactive canvas visualizer tracking your code lines in real-time. Click any note to jump directly to code.
+* **☁️ Community Cloud:** Search, download, and share song scripts directly from within the app.
+* **✨ Game Assist (V7):** Comprehensive image-recognition and automation suite for cooking, puzzle solving, farming, and camera navigation.
+
+---
+
+### 📂 Repository Structure
+
+```text
+Heartopia-Instrument-MIDI/
+├── V6/                         # PianiPia V6 (Dedicated Music Player)
+│   ├── PianiPiaV6.py           # V6 Entry point
+│   ├── build_bot_modular.bat   # PyInstaller build script
+│   ├── config.json             # V6 player configuration
+│   └── heartopia_modules/      # Modular backend (routes, player, editor, converter)
+├── V7/                         # PianiPia V7 (Music Player + In-Game Assist)
+│   ├── PianiPiaV7.py           # V7 Entry point
+│   ├── HeartAssist.py          # Standalone assist automation engine
+│   ├── config.json             # V7 player & assist settings
+│   ├── build glitch/           # Reference assets for build glitch helper
+│   └── heartopia_modules/      # Modular backend + assist module & web UI
+├── CookingReference/           # Default template images for Auto-Cook recognition
+├── SnowReference/              # Default template images for Snow Puzzle solver
+├── images/                     # Screenshot previews for README & documentation
+├── PianiPiaV6.exe              # Pre-compiled V6 standalone executable
+├── Heartopia MIDI V5.2.exe     # Legacy V5.2 executable
+└── README.md
+```
 
 ---
 
 ### 🛠️ Patch Notes History
 
-#### V6.0 Optimization & UI Overhaul (Latest)
-* **✅ Storage & Performance Optimization:** Completely removed the Game Assist tab and its heavy OpenCV dependencies. The app size has been reduced from 86MB down to just 24MB!
-* **✅ Amoled Neon UI:** The entire interface has been redesigned with a gorgeous Amoled Neon aesthetic.
-* **✅ Console Log Stretch:** Improved UI layout allows the console log to stretch and fit beautifully on your screen.
-* **✅ Playlist Filters:** Changed the default playlist filters to make organizing your songs easier.
-* **✅ Expanded Information Tab:** Added new resources and links for External Game Mods.
-* **✅ Audio to MIDI Converter:** Added a recommendation and link for the *eldoraudio Piano Audio to MIDI Converter* in the Info Tab (Note: this tool converts much better if the audio is a Piano Cover or Synthesia).
+#### V7.0 Major Automation Release
+* **✅ Modular Architecture:** Refactored into clean `heartopia_modules` with modular routes, player, config, and hotkey listeners.
+* **✅ Full Assist Integration:** Added in-app Assist tab directly into the Web UI.
+* **✅ Auto Cook & Snow Puzzle:** Integrated computer vision detection for cooking cycles and snow puzzles.
+* **✅ Auto Harvest & Auto Jump:** Added hold/spam modes for harvesting and jumping traversal.
+* **✅ Build Glitch Trigger:** Added simultaneous icon manipulation for build glitch shortcuts.
+* **✅ Open Source:** Entire codebase opened up for community contribution and direct Python execution.
+
+#### V6.0 Optimization & UI Overhaul
+* **✅ Storage & Performance Optimization:** Cleaned up dependencies for a streamlined music experience. Size dropped to 24MB.
+* **✅ Amoled Neon UI:** Redesigned interface with vibrant Amoled dark theme and responsive layout.
+* **✅ Playlist Filters:** Added multi-select, quick filters, and refreshed search.
+* **✅ Monaco Studio Editor:** Ultra-fast editor handling massive song scripts with live visual seek.
 
 #### V5.2 Converter Intelligence Update 
-* **✅ 15K Smart Pitch Folding:** Implemented intelligent note folding logic specifically for 15-key songs. Notes that fall outside the playable range now automatically wrap into the valid scale instead of being deleted.
-* **✅ Zero Dropped Notes:** Every single note from the source MIDI is now preserved and played. This ensures 15K songs match the rhythmic density and "fullness" of the 22K versions.
-* **✅ 15K Sync Fix:** Switched 15K conversion to a "Tap Mode" logic. This eliminates "ghost notes" and de-sync issues caused by conflicting sustain durations in the previous engine.
-* **✅ Smart Quantization:** "Black key" (accidental) notes now snap intelligently to their nearest valid physical key rather than being discarded.
+* **✅ 15K Smart Pitch Folding:** Notes outside the 15-key range fold gracefully instead of being discarded.
+* **✅ Zero Dropped Notes:** Every note from source MIDI is preserved for full rhythm density.
+* **✅ Tap Mode Logic:** Eliminates ghost notes and de-sync issues on fast tempos.
 
 #### V5.1 Hotfix & Improvements
-* **✅ FileName Support:** Removed strict naming restrictions on uploads that is causing for Upload Issues.
-* **✅ Increased Upload Limit:** Boosted the online upload limit from 200KB to **500KB** to support larger, more complex song scripts.
-* **✅ Smart Pagination:** Added a custom "Per Page" selector (50/100/200/300) to the Online tab. Your preference is saved automatically to `config.json`.
-* **✅ Batch Delete Fixed:** Fixed a critical bug where checking multiple songs in the Playlist and clicking "Delete Selected" would fail due to filename formatting issues.
-* **✅ Download Stability:** Implemented `clean_filename` sanitization. Downloads with illegal OS characters or missing extensions are now automatically fixed, preventing "Add to Playlist" failures.
-
-#### V5.0 Major Update
-* **NEW: Game Assist Tab:** Added a dedicated tab for game automation tools.
-* **NEW: Auto Cooker:** Added image recognition for automatic cooking on multiple stoves.
-* **NEW: Snow Puzzle Solver:** Added an automated solver for the snow mini-game.
-* **Optimization:** Unified the codebase for better stability and performance.
-
-#### V4.1 Studio Editor Hotfix
-* **🚀 Monaco Engine Integration:** Replaced the standard text box with the **Monaco Editor** (the engine powering VS Code).
-* **⚡ Massive Performance Boost:** The editor now supports **1,000,000+ lines** of code with zero lag using virtual scrolling. Fixed issues where files larger than 100k lines would crash the UI.
-* **🎯 Precision Sync Fix:** Fixed an issue where the text highlighter would drift off-sync. It now tracks playback with millisecond precision.
-* **🔍 Pinpoint Click-to-Find:** Clicking a note in the visualizer now calculates the exact line number and centers it instantly.
-
-#### V4.0 Major Update
-* **NEW: Studio Editor:** Added a dedicated tab for editing `.txt` scripts. Includes sync-scrolling and visual debugging tools.
-* **NEW: Visualizer Engine:** Added a high-performance Canvas-based Piano Roll to the Playlist and Editor tabs.
-* **NEW: WebSocket Architecture:** Completely removed the 500ms polling lag. The app now communicates via WebSockets for instantaneous, high-framerate UI updates.
-* **NEW: Online Pagination:** Fixed the issue where only the first 50 songs were visible in the Online tab. You can now browse the entire database.
-
-#### V3.3 Legacy Hotfix
-* **✅ Expanded Keybinds:** Fixed the settings menu to support **all keyboard keys**. You are no longer restricted to F1-F12.
-* **✅ Playlist Multi-Select:** Added checkboxes to the playlist for batch deletion.
-* **✅ Activity Console:** Added a live "Info Console" to the sidebar.
-
-#### V3.1 - V3.2 Legacy Fixes
-* **✅ Playback Speed Bug:** Fixed speed resetting to 1.0x on restart.
-* **✅ Sticky Keys:** Fixed keys remaining held down when pausing.
-* **✅ Alt-Tab Safety:** Auto-stop when switching windows to prevent typing in other apps.
-
-> **🐛 Encountered a new bug?**
-> If you have an issue not listed here, please **[Create an Issue](../../issues)** in this repository.
+* **✅ 500KB Upload Limit:** Increased upload limit for complex multipart scripts.
+* **✅ Smart Pagination:** Custom per-page selection (50/100/200/300) in Online tab.
+* **✅ Filename Sanitization:** Fixes illegal OS characters on download.
 
 ---
 
-### 📸 App Interface
+### ⚠️ Important: Antivirus False Positives (For .exe Users)
 
-<div align="center">
-  <h3>🎵 Playlist & Visuals</h3>
-  <img src="images/pianipiav6_playlistvisuals.png" width="800" alt="Playlist Tab" style="border-radius: 10px; margin-bottom: 20px;">
+**Is the `.exe` safe? Yes.**
 
-  <h3>📝 Studio Editor</h3>
-  <img src="images/pianipiav6_studioeditor.png" width="800" alt="Editor Tab" style="border-radius: 10px; margin-bottom: 20px;">
-
-  <h3>☁️ Online Cloud Library</h3>
-  <img src="images/pianipiav6_online.png" width="800" alt="Online Tab" style="border-radius: 10px; margin-bottom: 20px;">
-
-  <h3>🎹 Converter</h3>
-  <img src="images/pianipiav6_convert.png" width="800" alt="Convert Tab" style="border-radius: 10px; margin-bottom: 20px;">
-
-  <h3>⚙️ Settings</h3>
-  <img src="images/pianipiav6_settings.png" width="800" alt="Settings Tab" style="border-radius: 10px; margin-bottom: 20px;">
-
-  <h3>❓ Information</h3>
-  <img src="images/pianipiav6_info.png" width="800" alt="Info Tab" style="border-radius: 10px; margin-bottom: 20px;">
-</div>
-
----
-
-### ⚠️ Important: Antivirus False Positives
-
-**Is this a virus? No.**
-
-If you download the `.exe`, your antivirus (Windows Defender, Avast, etc.) may flag it as a **Trojan** or **Malware**.
+If you run the pre-compiled `.exe`, antivirus programs (Windows Defender, Avast, etc.) may flag it.
 
 **Why does this happen?**
-1.  **Automation Behavior:** This app uses libraries (`pydirectinput`, `pyautogui`) designed to take control of your keyboard and mouse. Antivirus software often mistakes this for malicious behavior.
-2.  **Unsigned Code:** As an independent developer, I do not have a digital code-signing certificate.
+1. **Input Simulation:** The app uses Windows input APIs (`pydirectinput`, `pyautogui`) to press keys in games. Antivirus heuristics frequently flag keyboard automation as a keylogger or Trojan.
+2. **Unsigned Executable:** Independent open-source projects lack expensive code-signing certificates.
+3. **PyInstaller Packing:** PyInstaller binaries are commonly flagged by heuristic scanners.
 
-* **Safe Workaround - Exclusion Folder:**
-    1.  Create a folder named `PianiPiaPlayer`.
-    2.  Open **Windows Security** > **Virus & threat protection** > **Manage settings** > **Exclusions**.
-    3.  Add the `PianiPiaPlayer` folder to exclusions.
-    4.  Extract the app there. It will run without issues.
+> 💡 **Best Solution:** Since PianiPia is **Open Source**, you can run directly from Python source (`python V6/PianiPiaV6.py` or `python V7/PianiPiaV7.py`). Running raw Python scripts bypasses binary scanner false positives completely!
+
+If you prefer using the `.exe`:
+1. Create a dedicated folder (e.g. `C:\Games\PianiPia`).
+2. Add that folder as an exclusion in **Windows Security** > **Virus & threat protection settings** > **Exclusions**.
+3. Place and run the executable inside that folder.
 
 ---
 
 ### 📖 How to Use
 
-1.  **Launch:** Run the application. A browser window will open automatically.
-2.  **Get Songs**:
-    * **☁️ Online Tab:** Search for songs, use the **Next/Prev** buttons to browse pages, and download.
-    * **🎹 Add / Convert Tab:** Drag and drop `.mid` files and click **Convert**.
-3.  **Play**:
-    * Go to **Playlist**, add songs to **Queue**.
-    * Press **Start (Default: F4)** to begin playing.
-    * Press **Stop (Default: F5)** to halt.
+1. **Launch:** Run `python V6/PianiPiaV6.py` (or `python V7/PianiPiaV7.py`). The browser UI opens at `http://127.0.0.1:5000`.
+2. **Get Songs:**
+   * **☁️ Online Tab:** Search the cloud library and click download.
+   * **🎹 Add / Convert Tab:** Drag and drop `.mid` files to automatically generate 22K or 15K scripts.
+3. **Play:**
+   * In **Playlist**, add songs to the **Queue**.
+   * Focus Heartopia in the foreground.
+   * Press **Start Key (Default: NUMPAD7 or F4)** to begin playing.
+   * Press **Stop Key (Default: NUMPAD8 or F5)** to halt.
+4. **Assist (V7 Only):**
+   * Go to the **✨ Assist** tab.
+   * Select the game window from the dropdown and click **Connect**.
+   * Toggle Auto Walk, Cam Lock, Auto Cook, Auto Harvest, or Snow Puzzle as needed.
 
 ---
+
 <p align="center">
-  Made with ❤️ by KaleidSkylark
+  Made with ❤️ by <a href="https://github.com/KaleidSkylark">KaleidSkylark</a>
 </p>
