@@ -1,0 +1,31 @@
+# Ignore everything by default
+*
+
+# Allow specific root files
+!.gitignore
+!README.md
+!PianiPiaV6.exe
+!Heartopia MIDI V5.2.exe
+
+# Allow image and reference directories
+!images/
+!images/**
+!CookingReference/
+!CookingReference/**
+!SnowReference/
+!SnowReference/**
+
+# Allow V6 and V7
+!V6/
+!V6/**
+!V7/
+!V7/**
+
+# Ignore cache, build, temporary, and tool files inside tracked directories
+**/__pycache__/**
+**/*.pyc
+**/*.pyo
+**/.kilo/**
+**/.agents/**
+**/.vscode/**
+**/.idea/**
