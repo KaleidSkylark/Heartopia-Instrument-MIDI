@@ -6,6 +6,11 @@
 !README.md
 !PianiPiaV6.exe
 !Heartopia MIDI V5.2.exe
+!build_v8_exe.bat
+
+# Allow GitHub workflows
+!.github/
+!.github/**
 
 # Allow image and reference directories
 !images/
@@ -14,12 +19,22 @@
 !CookingReference/**
 !SnowReference/
 !SnowReference/**
+!Tree&Rock&BushReference/
+!Tree&Rock&BushReference/**
 
-# Allow V6 and V7
+# Allow V6, V7 and Electron (V8)
 !V6/
 !V6/**
 !V7/
 !V7/**
+!Electron/
+!Electron/**
+
+# Exclude dependencies and build output inside Electron
+Electron/node_modules/**
+Electron/dist/**
+**/node_modules/**
+**/dist/**
 
 # Ignore cache, build, temporary, and tool files inside tracked directories
 **/__pycache__/**

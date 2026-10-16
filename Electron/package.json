@@ -1,0 +1,88 @@
+{
+  "name": "pianipia-electron",
+  "version": "8.0.0",
+  "description": "PianiPia V8 - Automated Instrument Player & Assistant for Heartopia",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev",
+    "build:exe": "electron-builder --win portable",
+    "build:dir": "electron-builder --dir",
+    "build:installer": "electron-builder --win nsis"
+  },
+  "author": "KaleidSkylark",
+  "license": "MIT",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.49.8",
+    "electron-store": "^8.2.0",
+    "midi-parser-js": "^4.0.4",
+    "python-shell": "^5.0.0"
+  },
+  "devDependencies": {
+    "electron": "^36.3.2",
+    "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "appId": "com.kaleidskylark.pianipia.v8",
+    "productName": "PianiPia V8",
+    "copyright": "Copyright © 2026 KaleidSkylark",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "main.js",
+      "python_bridge.py",
+      "config.json",
+      "favorites.json",
+      "logo.ico",
+      "package.json",
+      "heartopia_modules/**/*",
+      "renderer/**/*",
+      "!dist/**",
+      "!**/*.pyc",
+      "!**/__pycache__/**"
+    ],
+    "asar": true,
+    "asarUnpack": [
+      "python_bridge.py",
+      "heartopia_modules/**/*"
+    ],
+    "extraResources": [
+      {
+        "from": "../CookingReference",
+        "to": "CookingReference",
+        "filter": ["**/*"]
+      },
+      {
+        "from": "../SnowReference",
+        "to": "SnowReference",
+        "filter": ["**/*"]
+      },
+      {
+        "from": "../Tree&Rock&BushReference",
+        "to": "Tree&Rock&BushReference",
+        "filter": ["**/*"]
+      }
+    ],
+    "win": {
+      "target": [
+        "portable",
+        "nsis"
+      ],
+      "icon": "logo.ico"
+    },
+    "portable": {
+      "artifactName": "PianiPia_V8_Portable.exe",
+      "unpackDirName": "PianiPiaV8_Portable"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "artifactName": "PianiPia_V8_Setup.exe",
+      "shortcutName": "PianiPia V8",
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    }
+  }
+}
+

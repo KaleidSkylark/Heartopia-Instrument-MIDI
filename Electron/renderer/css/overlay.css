@@ -1,0 +1,695 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800;900&family=JetBrains+Mono:wght@600;700&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: transparent;
+  overflow: hidden;
+  user-select: none;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+}
+
+#island-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  pointer-events: auto;
+}
+
+/* ─── Apple iPhone Dynamic Island Shell (No blurred box-shadow for DWM artifacts) ─── */
+.island-pill {
+  background: #000000;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: none !important;
+  color: #ffffff;
+  overflow: hidden;
+  transform: translateZ(0);
+  transition: width 0.32s cubic-bezier(0.16, 1, 0.3, 1),
+              height 0.32s cubic-bezier(0.16, 1, 0.3, 1),
+              border-radius 0.32s cubic-bezier(0.16, 1, 0.3, 1),
+              background-color 0.25s ease,
+              border-color 0.25s ease;
+  -webkit-app-region: drag;
+  position: relative;
+}
+
+.island-pill:hover {
+  border-color: rgba(168, 85, 247, 0.7);
+  box-shadow: none !important;
+}
+
+/* ─── Dot State (Idle Minimal Circle) ─── */
+.island-pill.dot {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(168, 85, 247, 0.45);
+}
+
+.island-pill.dot:hover {
+  border-color: rgba(168, 85, 247, 0.95);
+  transform: scale(1.06);
+}
+
+.island-dot-view {
+  display: none;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.island-pill.dot .island-dot-view {
+  display: flex;
+}
+
+.island-pill.dot .island-compact-view,
+.island-pill.dot .island-expanded-view {
+  display: none !important;
+}
+
+.dot-core {
+  position: relative;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #7c3aed, #06b6d4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dot-icon {
+  font-size: 13px;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.4));
+}
+
+.dot-pulse {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 1.5px solid rgba(168, 85, 247, 0.6);
+  animation: dotPulse 2.4s ease-out infinite;
+}
+
+@keyframes dotPulse {
+  0% { transform: scale(1); opacity: 0.8; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+
+/* ─── Compact State (Idle / Pill) ─── */
+.island-pill.compact {
+  width: 320px;
+  height: 42px;
+  border-radius: 9999px;
+  padding: 0 14px;
+  cursor: pointer;
+}
+
+.island-compact-view {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 42px;
+}
+
+.island-pill.expanded .island-compact-view {
+  display: none;
+}
+
+.island-pill.compact .island-dot-view {
+  display: none;
+}
+
+.compact-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  overflow: hidden;
+  flex: 1;
+}
+
+.compact-disc {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #7c3aed, #06b6d4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: none;
+}
+
+.compact-disc.spinning {
+  animation: spin 3s linear infinite;
+}
+
+@keyframes spin {
+  100% { transform: rotate(360deg); }
+}
+
+.compact-disc .disc-icon {
+  font-size: 11px;
+}
+
+.compact-title {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 160px;
+  color: #f1f5f9;
+}
+
+.compact-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+/* Assist Indicator Dots */
+.compact-assist-indicators {
+  display: flex;
+  gap: 4px;
+}
+
+.indicator-dot {
+  font-size: 10px;
+  padding: 2px 4px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  display: none;
+  animation: pulse-badge 1.8s infinite alternate;
+}
+
+.indicator-dot.active {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(16, 185, 129, 0.25);
+  border: 1px solid rgba(16, 185, 129, 0.6);
+  box-shadow: none;
+}
+
+@keyframes pulse-badge {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.08); }
+}
+
+/* Animated Equalizer Waveform */
+.compact-eq-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 2.5px;
+  height: 16px;
+  width: 18px;
+}
+
+.eq-bar {
+  width: 2.5px;
+  background: #a855f7;
+  border-radius: 2px;
+  height: 4px;
+  transition: height 0.15s ease, background 0.3s ease;
+}
+
+.compact-eq-bars.playing .bar-1 {
+  animation: eq-bounce 0.65s infinite alternate ease-in-out;
+  background: #a855f7;
+}
+.compact-eq-bars.playing .bar-2 {
+  animation: eq-bounce 0.45s infinite alternate ease-in-out 0.15s;
+  background: #ec4899;
+}
+.compact-eq-bars.playing .bar-3 {
+  animation: eq-bounce 0.75s infinite alternate ease-in-out 0.3s;
+  background: #06b6d4;
+}
+.compact-eq-bars.playing .bar-4 {
+  animation: eq-bounce 0.55s infinite alternate ease-in-out 0.45s;
+  background: #10b981;
+}
+
+@keyframes eq-bounce {
+  0% { height: 3px; }
+  50% { height: 16px; }
+  100% { height: 6px; }
+}
+
+.compact-time-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  color: #94a3b8;
+  letter-spacing: 0.5px;
+}
+
+/* ─── Expanded State (Full Dynamic Island Player) ─── */
+.island-pill.expanded {
+  width: 440px;
+  height: 162px;
+  border-radius: 26px;
+  padding: 14px 18px;
+  cursor: default;
+  box-shadow: none !important;
+}
+
+.island-expanded-view {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.island-pill.expanded .island-expanded-view {
+  display: flex;
+  animation: islandContentFade 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes islandContentFade {
+  from { opacity: 0; transform: scale(0.97); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* Top Row */
+.expanded-top-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  -webkit-app-region: drag;
+}
+
+.album-art-wrap {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: radial-gradient(circle, #2d124d 0%, #110722 100%);
+  border: 1px solid rgba(168, 85, 247, 0.4);
+  box-shadow: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.vinyl-record {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #222 40%, #000 70%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.album-art-wrap.playing .vinyl-record {
+  animation: spin 3.5s linear infinite;
+}
+
+.vinyl-center {
+  font-size: 13px;
+}
+
+.expanded-track-details {
+  flex: 1;
+  overflow: hidden;
+}
+
+.expanded-song-title {
+  font-size: 13.5px;
+  font-weight: 800;
+  color: #ffffff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  letter-spacing: 0.2px;
+}
+
+.expanded-subtitle-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 3px;
+}
+
+.pill-badge {
+  font-size: 9.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  padding: 2px 7px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.12);
+  color: #cbd5e1;
+}
+
+.pill-badge.playing {
+  background: rgba(16, 185, 129, 0.25);
+  border: 1px solid rgba(16, 185, 129, 0.5);
+  color: #34d399;
+}
+
+.pill-badge.paused {
+  background: rgba(245, 158, 11, 0.25);
+  border: 1px solid rgba(245, 158, 11, 0.5);
+  color: #fbbf24;
+}
+
+.expanded-engine-tag {
+  font-size: 11px;
+  color: #64748b;
+  font-weight: 600;
+}
+
+/* Top Window Action Buttons */
+.expanded-window-actions {
+  display: flex;
+  gap: 6px;
+  -webkit-app-region: no-drag;
+}
+
+.island-action-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.08);
+  color: #cbd5e1;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  box-shadow: none;
+}
+
+.island-action-btn:hover {
+  background: rgba(255, 255, 255, 0.22);
+  color: #ffffff;
+  transform: scale(1.08);
+}
+
+.island-action-btn.close-btn:hover {
+  background: rgba(239, 68, 68, 0.7);
+  border-color: rgba(239, 68, 68, 0.9);
+  color: #ffffff;
+}
+
+/* Middle: Scrubber Track */
+.expanded-scrubber-section {
+  margin: 6px 0;
+  -webkit-app-region: no-drag;
+}
+
+.scrubber-bar {
+  width: 100%;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 3px;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.scrubber-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #a855f7, #06b6d4);
+  border-radius: 3px;
+  box-shadow: none;
+  transition: width 0.15s linear;
+}
+
+.scrubber-timestamps {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 4px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  color: #64748b;
+}
+
+/* Bottom: Media Controls + Quick Assist */
+.expanded-bottom-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  -webkit-app-region: no-drag;
+}
+
+.island-media-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.media-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  border-radius: 12px;
+  width: 36px;
+  height: 36px;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  box-shadow: none;
+}
+
+.media-btn:hover {
+  background: rgba(255, 255, 255, 0.22);
+  transform: translateY(-1px);
+}
+
+.media-btn.play-main {
+  width: 44px;
+  height: 36px;
+  background: linear-gradient(135deg, #7c3aed, #06b6d4);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow: none;
+  font-size: 14px;
+}
+
+.media-btn.play-main:hover {
+  transform: scale(1.05);
+}
+
+/* Assist Controls */
+.island-assist-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.assist-pill-btn {
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #cbd5e1;
+  border-radius: 12px;
+  padding: 6px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.2s ease;
+  box-shadow: none;
+}
+
+.assist-pill-btn:hover {
+  background: rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+}
+
+.assist-pill-btn.active {
+  background: linear-gradient(135deg, #059669, #10b981);
+  border-color: rgba(255, 255, 255, 0.4);
+  color: #ffffff;
+  box-shadow: none;
+}
+
+.assist-pill-btn .btn-emoji {
+  font-size: 12px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   LIGHT MODE STYLING FOR DYNAMIC ISLAND
+   ═══════════════════════════════════════════════════════════════════ */
+body.light-theme .island-pill {
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  box-shadow: none !important;
+  color: #0f172a;
+}
+
+body.light-theme .island-pill:hover {
+  border-color: rgba(124, 58, 237, 0.6);
+  box-shadow: none !important;
+}
+
+body.light-theme .island-pill.dot {
+  background: #ffffff;
+  border-color: rgba(124, 58, 237, 0.5);
+}
+
+body.light-theme .island-pill.dot:hover {
+  border-color: rgba(124, 58, 237, 0.9);
+}
+
+body.light-theme .compact-title {
+  color: #0f172a;
+}
+
+body.light-theme .compact-time-badge {
+  color: #64748b;
+}
+
+body.light-theme .indicator-dot {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+body.light-theme .indicator-dot.active {
+  background: rgba(16, 185, 129, 0.2);
+  border-color: rgba(16, 185, 129, 0.6);
+  box-shadow: none;
+}
+
+body.light-theme .expanded-song-title {
+  color: #0f172a;
+}
+
+body.light-theme .expanded-engine-tag {
+  color: #64748b;
+}
+
+body.light-theme .pill-badge {
+  background: rgba(0, 0, 0, 0.06);
+  color: #475569;
+}
+
+body.light-theme .pill-badge.playing {
+  background: rgba(16, 185, 129, 0.15);
+  border-color: rgba(16, 185, 129, 0.5);
+  color: #059669;
+}
+
+body.light-theme .pill-badge.paused {
+  background: rgba(245, 158, 11, 0.15);
+  border-color: rgba(245, 158, 11, 0.5);
+  color: #d97706;
+}
+
+body.light-theme .island-action-btn {
+  background: rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  color: #475569;
+  box-shadow: none;
+}
+
+body.light-theme .island-action-btn:hover {
+  background: rgba(0, 0, 0, 0.12);
+  color: #0f172a;
+}
+
+body.light-theme .island-action-btn.close-btn:hover {
+  background: rgba(239, 68, 68, 0.85);
+  border-color: rgba(239, 68, 68, 0.95);
+  color: #ffffff;
+}
+
+body.light-theme .scrubber-bar {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+body.light-theme .scrubber-fill {
+  background: linear-gradient(90deg, #7c3aed, #06b6d4);
+  box-shadow: none;
+}
+
+body.light-theme .scrubber-timestamps {
+  color: #64748b;
+}
+
+body.light-theme .media-btn {
+  background: rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  color: #1e293b;
+  box-shadow: none;
+}
+
+body.light-theme .media-btn:hover {
+  background: rgba(0, 0, 0, 0.1);
+  color: #0f172a;
+}
+
+body.light-theme .media-btn.play-main {
+  background: linear-gradient(135deg, #7c3aed, #06b6d4);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  color: #ffffff;
+  box-shadow: none;
+}
+
+body.light-theme .assist-pill-btn {
+  background: rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  color: #475569;
+  box-shadow: none;
+}
+
+body.light-theme .assist-pill-btn:hover {
+  background: rgba(0, 0, 0, 0.1);
+  color: #0f172a;
+}
+
+body.light-theme .assist-pill-btn.active {
+  background: linear-gradient(135deg, #059669, #10b981);
+  border-color: rgba(255, 255, 255, 0.35);
+  color: #ffffff;
+  box-shadow: none;
+}
+
+body.light-theme .album-art-wrap {
+  background: radial-gradient(circle, #f3e8ff 0%, #e9d5ff 100%);
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  box-shadow: none;
+}
+
+body.light-theme .vinyl-record {
+  background: radial-gradient(circle, #475569 40%, #1e293b 70%);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}

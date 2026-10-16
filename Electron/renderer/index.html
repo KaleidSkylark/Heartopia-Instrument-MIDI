@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PianiPia V8 — Heartopia Instrument Suite</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="dark-theme">
+
+  <!-- ─── Custom Window Titlebar ─── -->
+  <div class="titlebar">
+    <div class="titlebar-title">
+      <span class="dot"></span>
+      <span>PianiPia V8 — Heartopia Instrument Suite</span>
+    </div>
+
+    <!-- Top Center Dynamic Island Overlay Toggle -->
+    <div class="titlebar-center">
+      <button class="titlebar-island-toggle" id="btn-toggle-island" onclick="toggleOverlay()" title="Toggle Top-of-Screen Dynamic Island Overlay">
+        <span class="island-icon">🏝️</span>
+        <span id="island-btn-text">Overlay: Off</span>
+        <span class="island-status-dot"></span>
+      </button>
+    </div>
+
+    <div class="titlebar-controls">
+      <button class="titlebar-btn" id="btn-win-min" title="Minimize">—</button>
+
+      <!-- Win11 Snap Layouts Container -->
+      <div class="titlebar-btn-snap-wrapper" id="snap-btn-wrapper">
+        <button class="titlebar-btn" id="btn-win-max" title="Maximize">□</button>
+        <div class="win11-snap-flyout" id="win11-snap-menu">
+          <div class="snap-flyout-header">
+            <span>Windows 11 Snap Layouts</span>
+          </div>
+          <div class="snap-layouts-grid">
+            <!-- 50 / 50 Split -->
+            <div class="snap-card" title="Split Screen 50 / 50">
+              <div class="snap-zone" data-snap="left-half" title="Left Half"></div>
+              <div class="snap-zone" data-snap="right-half" title="Right Half"></div>
+            </div>
+            <!-- 67 / 33 Split -->
+            <div class="snap-card" title="Split Screen 2/3 and 1/3">
+              <div class="snap-zone zone-wide" data-snap="left-two-thirds" title="Left 2/3"></div>
+              <div class="snap-zone zone-narrow" data-snap="right-one-third" title="Right 1/3"></div>
+            </div>
+            <!-- 3 Columns -->
+            <div class="snap-card" title="Three Columns">
+              <div class="snap-zone" data-snap="col-left" title="Left Column"></div>
+              <div class="snap-zone" data-snap="col-center" title="Center Column"></div>
+              <div class="snap-zone" data-snap="col-right" title="Right Column"></div>
+            </div>
+            <!-- 4 Quadrants -->
+            <div class="snap-card snap-quad-card" title="Four Corners">
+              <div class="snap-zone" data-snap="quad-tl" title="Top Left"></div>
+              <div class="snap-zone" data-snap="quad-tr" title="Top Right"></div>
+              <div class="snap-zone" data-snap="quad-bl" title="Bottom Left"></div>
+              <div class="snap-zone" data-snap="quad-br" title="Bottom Right"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button class="titlebar-btn close" id="btn-win-close" title="Close">✕</button>
+    </div>
+  </div>
+
+  <!-- ─── Neumorphic Modals ─── -->
+  <div id="custom-modal" class="modal-overlay">
+    <div class="modal-box">
+      <div id="modal-title" class="modal-title">Alert</div>
+      <div id="modal-body" class="modal-body">Message...</div>
+      <button class="btn-neu accent" style="min-width: 140px; justify-content: center; text-align: center; margin: 0 auto;" onclick="closeModal()">Got it!</button>
+    </div>
+  </div>
+
+  <div id="custom-confirm" class="modal-overlay">
+    <div class="modal-box">
+      <div id="confirm-title" class="modal-title">Confirm Action</div>
+      <div id="confirm-body" class="modal-body">Are you sure you want to proceed?</div>
+      <div class="flex-row" style="justify-content: center; gap: 15px; width: 100%;">
+        <button class="btn-neu" style="min-width: 110px; justify-content: center;" onclick="confirmNo()">Cancel</button>
+        <button class="btn-neu accent" style="min-width: 110px; justify-content: center;" onclick="confirmYes()">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="exit-modal" class="modal-overlay">
+    <div class="modal-box" style="border: 1px solid var(--danger);">
+      <div class="modal-title" style="color: var(--danger);">Exit Application</div>
+      <div class="modal-body">Are you sure you want to quit PianiPia? Any active playback will stop.</div>
+      <div class="flex-row" style="justify-content: center; gap: 15px; width: 100%;">
+        <button class="btn-neu" style="min-width: 110px; justify-content: center;" onclick="document.getElementById('exit-modal').classList.remove('active')">Cancel</button>
+        <button class="btn-neu danger" style="min-width: 110px; justify-content: center;" onclick="finalizeExit()">Exit Now</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── Assist Config Modal: Auto Harvest & Bulk Targets ─── -->
+  <div id="modal-harvest-config" class="modal-overlay">
+    <div class="modal-box modal-wide">
+      <div class="modal-header-row">
+        <div class="modal-title" style="text-align: left; margin: 0; font-size: 1.25em;">
+          🌾 Auto Harvest & Target Vision Configuration
+        </div>
+        <button class="modal-close-btn" onclick="closeHarvestModal()">✕</button>
+      </div>
+
+      <div class="modal-config-scroll">
+        <!-- Automation Execution Method (Spam vs Vision) -->
+        <div class="modal-section-box">
+          <div class="modal-section-title">🌾 Automation Execution Method</div>
+          <div class="segmented-control" style="margin: 8px 0 6px 0; width: 100%;">
+            <button id="modal-method-spam" class="segment-btn active" style="flex: 1;" onclick="setHarvestMethod('spam')">⚡ Spam / Key Hold Method</button>
+            <button id="modal-method-vision" class="segment-btn" style="flex: 1;" onclick="setHarvestMethod('vision')">👁️ Vision Detection Method</button>
+          </div>
+          <div id="modal-method-desc" style="font-size: 0.8em; color: var(--text-secondary);">
+            ⚡ Spam Method: Continuous rapid keystroke interaction for crops and farm plots.
+          </div>
+        </div>
+
+        <!-- Keystroke Harvest Settings -->
+        <div class="modal-section-box" style="margin-top: 14px;">
+          <div class="modal-section-title">⌨ Keystroke Harvest Settings</div>
+          <div class="modal-grid-2col">
+            <div class="control-group">
+              <label>Loot Key</label>
+              <select id="modal-harvest-vk" class="input-neu" onchange="syncHarvestModalToState()">
+                <option value="70">F Key</option>
+                <option value="69">E Key</option>
+                <option value="32">SPACE</option>
+              </select>
+            </div>
+            <div class="control-group">
+              <label>Mode</label>
+              <select id="modal-harvest-mode" class="input-neu" onchange="syncHarvestModalToState()">
+                <option value="spam">Spam (Repeated Taps)</option>
+                <option value="hold">Hold (Continuous Press)</option>
+              </select>
+            </div>
+          </div>
+          <div class="modal-grid-2col" style="margin-top: 10px;">
+            <div class="control-group" id="modal-harvest-spam-wrap">
+              <label>Spam Rate (Interval)</label>
+              <div class="flex-row gap-xs" style="align-items: center;">
+                <input type="number" id="modal-harvest-spam" class="input-neu" value="0.10" step="0.05" min="0.05" onchange="syncHarvestModalToState()">
+                <span style="font-size: 0.85em; color: var(--text-muted);">sec</span>
+              </div>
+            </div>
+            <div class="control-group" id="modal-harvest-dur-wrap" style="display: none;">
+              <label>Hold Duration</label>
+              <div class="flex-row gap-xs" style="align-items: center;">
+                <input type="number" id="modal-harvest-duration" class="input-neu" value="5.0" step="0.5" min="0.5" onchange="syncHarvestModalToState()">
+                <span style="font-size: 0.85em; color: var(--text-muted);">sec</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bulk Reference Targets (Trees, Rocks, Bushes) -->
+        <div class="modal-section-box" style="margin-top: 14px;">
+          <div class="flex-row" style="justify-content: space-between; align-items: center; margin-bottom: 8px;">
+            <div>
+              <div class="modal-section-title" style="margin-bottom: 2px;">🌲 Vision Targets (Trees, Rocks & Bushes)</div>
+              <div style="font-size: 0.78em; color: var(--text-secondary);">Select multiple files at once. All images are cached in RAM for zero disk lag.</div>
+              <div style="font-size: 0.76em; color: var(--accent-cyan); margin-top: 4px; font-weight: 600;">💡 Note: The more samples you add, the better the detection accuracy across different angles and lighting conditions!</div>
+            </div>
+            <span class="badge badge-accent" id="modal-harvest-count-badge">0 Targets</span>
+          </div>
+
+          <!-- Bulk Action Toolbar -->
+          <div class="flex-row gap-sm" style="flex-wrap: wrap; margin-bottom: 12px;">
+            <button class="btn-neu" onclick="addBulkHarvestImages()" style="font-size: 0.84em; padding: 6px 12px;">
+              <span>📁</span>
+              <span>+ Select Images (Bulk)</span>
+            </button>
+            <button class="btn-neu accent" onclick="loadDefaultHarvestImages()" style="font-size: 0.84em; padding: 6px 12px;">
+              <span>⚡</span>
+              <span>Select All from Tree&Rock&Bush</span>
+            </button>
+            <button class="btn-neu danger" onclick="clearAllHarvestImages()" style="font-size: 0.84em; padding: 6px 12px;">
+              <span>🗑</span>
+              <span>Clear All</span>
+            </button>
+          </div>
+
+          <!-- Active Chips Container -->
+          <div class="harvest-chips-wrap" id="harvest-chips-container">
+            <span style="color: var(--text-muted); font-size: 0.82em; margin: auto;">No targets loaded. Click 'Select All from Tree&Rock&Bush' to load presets.</span>
+          </div>
+
+          <div style="margin-top: 10px; font-size: 0.76em; color: var(--success); display: flex; align-items: center; gap: 6px;">
+            <span>⚡</span>
+            <span>In-Memory Image Cache Active: Scans execute directly in RAM with zero disk I/O</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer-row" style="margin-top: 20px; display: flex; justify-content: flex-end; gap: 10px; width: 100%;">
+        <button class="btn-neu" onclick="closeHarvestModal()">Cancel</button>
+        <button class="btn-neu accent" onclick="saveHarvestModalConfig()">Save & Apply</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── Assist Config Modal: Auto Cook Targets ─── -->
+  <div id="modal-cook-config" class="modal-overlay">
+    <div class="modal-box modal-wide">
+      <div class="modal-header-row">
+        <div class="modal-title" style="text-align: left; margin: 0; font-size: 1.25em;">
+          👨‍🍳 Auto Cook Reference Targets
+        </div>
+        <button class="modal-close-btn" onclick="closeCookModal()">✕</button>
+      </div>
+
+      <div class="modal-config-scroll">
+        <div class="flex-row" style="justify-content: space-between; align-items: center; margin-bottom: 12px;">
+          <span style="font-size: 0.82em; color: var(--text-secondary);">Automated detection triggers for the cooking stove mini-game.</span>
+          <button class="btn-neu accent" onclick="loadDefaultCookImages()" style="font-size: 0.8em; padding: 5px 10px;">⚡ Load Defaults</button>
+        </div>
+
+        <div class="modal-images-grid">
+          <div class="image-field-wrap">
+            <span>Stove</span>
+            <div class="image-input-group">
+              <input type="text" id="img-stove" readonly class="input-neu" placeholder="stove.png">
+              <button class="btn-neu" onclick="browseAssistImage('stove')">📁</button>
+            </div>
+          </div>
+          <div class="image-field-wrap">
+            <span>Start Cooking</span>
+            <div class="image-input-group">
+              <input type="text" id="img-start" readonly class="input-neu" placeholder="start_cooking.png">
+              <button class="btn-neu" onclick="browseAssistImage('start')">📁</button>
+            </div>
+          </div>
+          <div class="image-field-wrap">
+            <span>Heat Indicator</span>
+            <div class="image-input-group">
+              <input type="text" id="img-heat" readonly class="input-neu" placeholder="heat.png">
+              <button class="btn-neu" onclick="browseAssistImage('heat')">📁</button>
+            </div>
+          </div>
+          <div class="image-field-wrap">
+            <span>Served</span>
+            <div class="image-input-group">
+              <input type="text" id="img-serve" readonly class="input-neu" placeholder="served.png">
+              <button class="btn-neu" onclick="browseAssistImage('serve')">📁</button>
+            </div>
+          </div>
+          <div class="image-field-wrap" style="grid-column: span 2;">
+            <span>Recipe</span>
+            <div class="image-input-group">
+              <input type="text" id="img-recipe" readonly class="input-neu" placeholder="recipe.png">
+              <button class="btn-neu" onclick="browseAssistImage('recipe')">📁</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer-row" style="margin-top: 18px; display: flex; justify-content: flex-end; gap: 10px; width: 100%;">
+        <button class="btn-neu accent" onclick="closeCookModal()">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── Assist Config Modal: Snow Puzzle Targets ─── -->
+  <div id="modal-snow-config" class="modal-overlay">
+    <div class="modal-box modal-wide">
+      <div class="modal-header-row">
+        <div class="modal-title" style="text-align: left; margin: 0; font-size: 1.25em;">
+          ❄️ Snow Puzzle Reference Targets
+        </div>
+        <button class="modal-close-btn" onclick="closeSnowModal()">✕</button>
+      </div>
+
+      <div class="modal-config-scroll">
+        <div class="flex-row" style="justify-content: space-between; align-items: center; margin-bottom: 12px;">
+          <span style="font-size: 0.82em; color: var(--text-secondary);">Automated recognition targets for the snowman puzzle and reward collection.</span>
+          <button class="btn-neu accent" onclick="loadDefaultSnowImages()" style="font-size: 0.8em; padding: 5px 10px;">⚡ Load Defaults</button>
+        </div>
+
+        <div class="modal-images-grid">
+          <div class="image-field-wrap">
+            <span>Add Snow</span>
+            <div class="image-input-group">
+              <input type="text" id="img-snow_add" readonly class="input-neu" placeholder="add_snow.png">
+              <button class="btn-neu" onclick="browseAssistImage('snow_add')">📁</button>
+            </div>
+          </div>
+          <div class="image-field-wrap">
+            <span>Start Snow</span>
+            <div class="image-input-group">
+              <input type="text" id="img-snow_start" readonly class="input-neu" placeholder="start_snow.png">
+              <button class="btn-neu" onclick="browseAssistImage('snow_start')">📁</button>
+            </div>
+          </div>
+          <div class="image-field-wrap">
+            <span>Puzzle Target</span>
+            <div class="image-input-group">
+              <input type="text" id="img-snow_puzzle" readonly class="input-neu" placeholder="snow_puzzle.png">
+              <button class="btn-neu" onclick="browseAssistImage('snow_puzzle')">📁</button>
+            </div>
+          </div>
+          <div class="image-field-wrap">
+            <span>Get Reward</span>
+            <div class="image-input-group">
+              <input type="text" id="img-snow_get" readonly class="input-neu" placeholder="get_snow.png">
+              <button class="btn-neu" onclick="browseAssistImage('snow_get')">📁</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer-row" style="margin-top: 18px; display: flex; justify-content: flex-end; gap: 10px; width: 100%;">
+        <button class="btn-neu accent" onclick="closeSnowModal()">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── App Container ─── -->
+  <div class="app-container">
+
+    <!-- ─── Neumorphic Sidebar ─── -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-name">PIANIPIA</div>
+        <div class="brand-version">V8 ELECTRON</div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <button id="btn-playlist" class="nav-btn active" onclick="switchTab('playlist')">
+          <span class="nav-icon">🎵</span>
+          <span>Playlist</span>
+        </button>
+        <button id="btn-editor" class="nav-btn" onclick="switchTab('editor')">
+          <span class="nav-icon">📝</span>
+          <span>Studio Editor</span>
+        </button>
+        <button id="btn-online" class="nav-btn" onclick="switchTab('online')">
+          <span class="nav-icon">☁</span>
+          <span>Online Library</span>
+        </button>
+        <button id="btn-add" class="nav-btn" onclick="switchTab('add')">
+          <span class="nav-icon">🎹</span>
+          <span>Add / Convert</span>
+        </button>
+        <button id="btn-assist" class="nav-btn" onclick="switchTab('assist')">
+          <span class="nav-icon">✨</span>
+          <span>Assist</span>
+        </button>
+        <button id="btn-settings" class="nav-btn" onclick="switchTab('settings')">
+          <span class="nav-icon">⚙</span>
+          <span>Settings</span>
+        </button>
+        <button id="btn-guide" class="nav-btn" onclick="switchTab('guide')">
+          <span class="nav-icon">❓</span>
+          <span>Information</span>
+        </button>
+        <button id="btn-theme" class="nav-btn" onclick="toggleTheme()">
+          <span class="nav-icon">☀</span>
+          <span>Light Mode</span>
+        </button>
+
+        <!-- Neumorphic Console -->
+        <div class="control-group" style="margin-top: 14px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <label style="margin: 0;">System Activity</label>
+            <button class="btn-clear-console" onclick="clearConsole()">Clear</button>
+          </div>
+          <div id="app-console" class="sidebar-console"></div>
+        </div>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button class="btn-neu danger" style="width: 100%; justify-content: center;" onclick="showExitModal()">
+          <span>✕</span> Exit App
+        </button>
+      </div>
+    </aside>
+
+    <!-- ─── Content Area ─── -->
+    <main class="content">
+
+      <!-- ═══ 1. PLAYLIST TAB ═══ -->
+      <section id="playlist" class="tab-content active">
+        <div class="playlist-grid">
+
+          <!-- Left: Library Column -->
+          <div class="playlist-column">
+            <!-- Search -->
+            <div style="margin-bottom: 12px;">
+              <input type="text" id="search-local" class="input-neu" placeholder="Search songs..." oninput="handlePlaylistSearch()">
+            </div>
+
+            <!-- Filters & Controls -->
+            <div class="flex-row" style="justify-content: space-between; margin-bottom: 12px;">
+              <div class="filter-group">
+                <button class="filter-btn active" id="pl-all" onclick="setPlaylistFilter('All')">All</button>
+                <button class="filter-btn" id="pl-22k" onclick="setPlaylistFilter('22K')">22K Half</button>
+                <button class="filter-btn" id="pl-15k" onclick="setPlaylistFilter('15K')">15K</button>
+                <button class="filter-btn" onclick="loadPlaylistData()" style="border-left: 1px solid var(--shadow-dark);">↻ Refresh</button>
+              </div>
+
+              <div class="flex-row">
+                <select id="sort-select" class="input-neu" style="width: auto; padding: 6px 30px 6px 12px; font-size: 0.8em;" onchange="renderPlaylist()">
+                  <option value="name_asc">Name (A-Z)</option>
+                  <option value="name_desc">Name (Z-A)</option>
+                  <option value="date_desc" selected>Newest First</option>
+                  <option value="date_asc">Oldest First</option>
+                </select>
+
+                <div class="flex-row gap-sm">
+                  <label class="toggle-switch">
+                    <input type="checkbox" id="chk-fav" onchange="renderPlaylist()">
+                    <span class="toggle-slider"></span>
+                  </label>
+                  <span style="font-size: 0.8em; font-weight: 700; color: var(--text-secondary);">Favs</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Selection Bar -->
+            <div class="flex-row" style="justify-content: space-between; margin-bottom: 8px; padding: 0 4px;">
+              <div class="flex-row gap-sm">
+                <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 0.82em; font-weight: 700;">
+                  <input type="checkbox" id="chk-playlist-select-all" class="check-neu" onchange="togglePlaylistSelectAll()">
+                  <span>Select All</span>
+                </label>
+                <span id="playlist-selected-count" class="badge">0 selected</span>
+              </div>
+              <button class="btn-neu danger" style="padding: 6px 12px; font-size: 0.78em;" onclick="deleteSelectedPlaylist()">Delete Selected</button>
+            </div>
+
+            <!-- Song List -->
+            <div class="song-list" id="local-list"></div>
+
+            <!-- Playlist Pagination -->
+            <div id="playlist-pagination" class="pagination-container" style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px; padding: 4px 6px;">
+              <div class="flex-row gap-sm" style="align-items: center;">
+                <button class="btn-neu" style="padding: 5px 12px; font-size: 0.82em;" onclick="changePlaylistPage(-1)">← Prev</button>
+                <span id="playlist-page-info" style="font-weight: 700; font-size: 0.82em; color: var(--text-secondary); margin: 0 6px;">Page 1 of 1</span>
+                <button class="btn-neu" style="padding: 5px 12px; font-size: 0.82em;" onclick="changePlaylistPage(1)">Next →</button>
+              </div>
+              <div class="flex-row gap-sm" style="align-items: center;">
+                <span style="font-size: 0.8em; color: var(--text-muted); font-weight: 600;">Show:</span>
+                <select id="playlist-per-page" class="input-neu" style="width: auto; padding: 4px 28px 4px 10px; font-size: 0.82em;" onchange="changePlaylistPerPage()">
+                  <option value="50" selected>50 / page</option>
+                  <option value="100">100 / page</option>
+                  <option value="300">300 / page</option>
+                  <option value="all">All</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Player Column -->
+          <div class="playlist-column">
+            <div class="player-panel">
+              <div class="now-playing">
+                <span class="now-playing-icon">🎵</span>
+                <div style="flex: 1; overflow: hidden;">
+                  <div id="player-song-name" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">No song selected</div>
+                  <div class="flex-row gap-sm" style="margin-top: 4px;">
+                    <span id="player-song-tag" class="song-tag tag-22k" style="display: none;">22K Half</span>
+                    <span id="player-status" style="font-size: 0.75em; color: var(--text-muted); font-weight: 700;">(Ready)</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Piano Canvas -->
+              <canvas id="canvas-player" class="piano-canvas" width="800" height="200"></canvas>
+
+              <!-- Progress Bar -->
+              <div class="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+              </div>
+
+              <!-- Controls Grid -->
+              <div class="controls-grid">
+                <div class="control-group">
+                  <label>Speed: <span id="val-speed" style="color: var(--primary);">1.0</span>x</label>
+                  <input type="range" id="slider-speed" min="0.1" max="5.0" step="0.1" value="1.0" oninput="document.getElementById('val-speed').innerText=this.value" onchange="onMainSpeedChange(this.value)">
+                  <div class="slider-limits"><span>0.1x</span><span>5.0x</span></div>
+                </div>
+
+                <div class="flex-row" style="justify-content: center; gap: 10px;">
+                  <button id="btn-play" class="btn-neu accent" style="width: 100px; justify-content: center;" onclick="togglePlayback()">START</button>
+                  <button id="btn-stop" class="btn-neu danger" style="width: 80px; justify-content: center;" onclick="stopPlayback()">STOP</button>
+                </div>
+
+                <div class="control-group">
+                  <label>Seek %: <span id="val-seek" style="color: var(--primary);">0</span></label>
+                  <input type="range" id="slider-seek" min="0" max="100" step="1" value="0" oninput="document.getElementById('val-seek').innerText=this.value">
+                  <div class="slider-limits"><span>0%</span><span>100%</span></div>
+                </div>
+              </div>
+
+              <!-- Audio Preview Button -->
+              <button id="btn-audio-preview" class="audio-btn" onclick="toggleAudioPreview()">🔊 Preview Audio + Visualizer</button>
+
+              <!-- Timing & Loop -->
+              <div style="margin-top: 16px; display: flex; justify-content: space-between; align-items: center;">
+                <div class="control-group" style="flex: 1; margin-right: 20px;">
+                  <label>Chord Timing: <span id="val-snap" style="color: var(--primary);">0</span> ms</label>
+                  <input type="range" id="slider-snap" min="0" max="200" step="10" value="0" oninput="updateParam('snap', this.value)">
+                  <div class="slider-limits"><span>0 ms</span><span>200 ms</span></div>
+                </div>
+                <div class="flex-row gap-sm">
+                  <label class="toggle-switch">
+                    <input type="checkbox" id="chk-loop" onchange="updateParam('loop', this.checked)">
+                    <span class="toggle-slider"></span>
+                  </label>
+                  <span style="font-size: 0.82em; font-weight: 700; color: var(--text-secondary);">Loop</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Up Next Queue -->
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px;">
+              <div class="section-header" style="margin: 0; padding: 0;">
+                <span>UP NEXT</span>
+                <span id="queue-count-badge" class="badge">0</span>
+              </div>
+              <button class="btn-neu" style="padding: 4px 10px; font-size: 0.75em;" onclick="clearQueue()">Clear Queue</button>
+            </div>
+            <div class="queue-list" id="queue-list-container">
+              <div style="padding: 24px; text-align: center; color: var(--text-muted); font-size: 0.88em;">Queue is empty.<br>Click <b>+</b> on any song to add.</div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ═══ 2. STUDIO EDITOR TAB ═══ -->
+      <section id="editor" class="tab-content">
+        <div class="editor-container">
+
+          <!-- Left: Code Editor Pane -->
+          <div class="editor-pane">
+            <div class="editor-header">
+              <span id="editor-filename">Untitled.txt</span>
+              <div class="flex-row gap-sm">
+                <label style="font-size: 0.8em; display: flex; align-items: center; gap: 6px; cursor: pointer; color: var(--text-secondary);">
+                  <input type="checkbox" id="editor-smooth-scroll" checked class="check-neu"> Auto Scroll
+                </label>
+                <button class="btn-neu accent" style="padding: 6px 14px; font-size: 0.8em;" onclick="saveEditorContent()">💾 Save File</button>
+              </div>
+            </div>
+
+            <div class="editor-toolbar">
+              <span style="font-size: 0.72em; font-weight: 800; color: var(--primary); margin-right: 6px;">INSERT:</span>
+              <button class="tool-btn" onclick="insertTemplate('note')">⬇ + KeyDown</button>
+              <button class="tool-btn" onclick="insertTemplate('release')">⬆ + KeyUp</button>
+              <button class="tool-btn" onclick="insertTemplate('delay')">⏳ + DELAY</button>
+              <button class="tool-btn" onclick="insertTemplate('chord')">🎹 + Click Pair</button>
+            </div>
+
+            <div class="editor-main">
+              <div id="monaco-container">
+                <textarea id="editor-fallback" class="editor-textarea" spellcheck="false" placeholder="// Select a song to inspect or write your own note commands..."></textarea>
+              </div>
+            </div>
+
+            <div class="editor-footer">
+              <div class="flex-row" style="justify-content: space-between; font-size: 0.78em; color: var(--text-muted);">
+                <span id="editor-status-line">Line: 1</span>
+                <span id="editor-status-time">00:00 / 00:00</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Visualizer & Playback Pane -->
+          <div class="editor-pane">
+            <div class="editor-header">
+              <span>LIVE AUDIO PREVIEW</span>
+              <div class="flex-row gap-sm">
+                <button class="btn-neu accent" id="btn-editor-play" style="padding: 6px 12px;" onclick="playEditor()" title="Play">▶</button>
+                <button class="btn-neu" id="btn-editor-pause" style="padding: 6px 12px;" onclick="pauseEditor()" title="Pause" disabled>⏸</button>
+                <button class="btn-neu danger" id="btn-editor-stop" style="padding: 6px 12px;" onclick="stopEditorPreview()" title="Stop" disabled>⏹</button>
+              </div>
+            </div>
+
+            <div style="padding: 18px; display: flex; flex-direction: column; flex: 1; min-height: 0; overflow: hidden; box-sizing: border-box;">
+              <div style="flex: 1; min-height: 140px; position: relative; overflow: hidden; border-radius: var(--radius-sm); background: #080a12; border: var(--glass-border); box-shadow: var(--neu-pressed);">
+                <canvas id="canvas-editor" class="piano-canvas" width="600" height="260" style="width: 100%; height: 100%; position: absolute; top: 0; left: 0; margin-bottom: 0; cursor: pointer;" onclick="handleCanvasClick(event)"></canvas>
+              </div>
+
+              <!-- Seek & Progress Track -->
+              <div style="margin-top: 14px; flex-shrink: 0;">
+                <div class="control-group" style="margin-bottom: 0;">
+                  <label>Seek Progression</label>
+                  <div class="editor-seek-container">
+                    <span id="editor-time-current">0:00</span>
+                    <div class="editor-slider-track">
+                      <div id="editor-seek-fill" class="editor-slider-fill"></div>
+                      <input type="range" id="editor-seek-slider" class="editor-slider-input" min="0" max="100" step="0.1" value="0" oninput="onEditorSeekInput()" onchange="onEditorSeekChange()">
+                    </div>
+                    <span id="editor-time-total">0:00</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Controls row -->
+              <div class="flex-row" style="margin-top: 12px; justify-content: space-between; align-items: center; flex-shrink: 0;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <label style="font-size: 0.82em; font-weight: 700; color: var(--text-secondary);">Speed:</label>
+                  <input type="range" id="editor-speed" min="0.1" max="3.0" step="0.1" value="1.0" style="width: 110px;" oninput="const v = parseFloat(this.value).toFixed(1) + 'x'; const el = document.getElementById('editor-speed-val'); if(el) el.innerText = v; if(window.isEditorPreviewing){ stopEditorPreview(); playEditor(document.getElementById('editor-seek-slider').value); }">
+                  <span id="editor-speed-val" style="font-size: 0.82em; font-weight: 700; color: var(--primary-light);">1.0x</span>
+                </div>
+                <span style="font-size: 0.78em; color: var(--text-muted);">💡 Click note in roll to jump to code</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ═══ 3. ONLINE COMMUNITY TAB ═══ -->
+      <section id="online" class="tab-content">
+        <div style="margin-bottom: 12px;">
+          <input type="text" id="search-online" class="input-neu" placeholder="Search community songs from Supabase..." oninput="handleSearchInput()">
+        </div>
+
+        <div class="flex-row" style="justify-content: space-between; margin-bottom: 12px;">
+          <div class="flex-row gap-sm">
+            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 0.85em; font-weight: 700;">
+              <input type="checkbox" id="chk-select-all" class="check-neu" onchange="toggleSelectAll()">
+              <span>Select All</span>
+            </label>
+            <span id="selected-count" class="badge">0 selected</span>
+
+            <div class="filter-group" style="margin-left: 8px;">
+              <button class="filter-btn active" id="on-all" onclick="setOnlineFilter('All')">All</button>
+              <button class="filter-btn" id="on-22k" onclick="setOnlineFilter('22K')">22K Half</button>
+              <button class="filter-btn" id="on-15k" onclick="setOnlineFilter('15K')">15K</button>
+            </div>
+            <button onclick="refreshOnline()" class="btn-neu" style="padding: 6px 12px;" title="Refresh Online List">↻</button>
+          </div>
+
+          <div class="flex-row gap-sm">
+            <button class="btn-neu accent" onclick="downloadSelected()">Download Selected</button>
+            <label class="btn-neu" style="cursor: pointer;">
+              <span>⬆ Upload Text Songs</span>
+              <input type="file" id="upload-online-file" multiple accept=".txt" style="display: none;" onchange="uploadOnlineFiles(this)">
+            </label>
+          </div>
+        </div>
+
+        <div class="song-list" id="online-list">
+          <div style="padding: 40px; text-align: center; color: var(--text-muted);">Start typing or click Refresh to browse...</div>
+        </div>
+
+        <div id="online-pagination" class="pagination-container" style="display: none;">
+          <button class="btn-neu" onclick="changePage(-1)">← Prev</button>
+          <span id="page-info" style="font-weight: 700; color: var(--primary);">Page 1</span>
+          <button class="btn-neu" onclick="changePage(1)">Next →</button>
+          <div style="border-left: 1px solid var(--shadow-dark); padding-left: 14px; margin-left: 6px;">
+            <select id="online-per-page" class="input-neu" style="width: auto; padding: 6px 30px 6px 12px; font-size: 0.82em;" onchange="changePerPage()">
+              <option value="50">50 / page</option>
+              <option value="100">100 / page</option>
+              <option value="200">200 / page</option>
+              <option value="300">300 / page</option>
+            </select>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══ 4. ADD / CONVERT TAB ═══ -->
+      <section id="add" class="tab-content">
+        <div class="full-height-grid">
+
+          <!-- Dropzone -->
+          <label class="upload-zone" id="drop-zone">
+            <span style="font-size: 4em; margin-bottom: 16px;">📂</span>
+            <span style="font-weight: 800; font-size: 1.6em; color: var(--text);">Drag & Drop MIDI Files Here</span>
+            <small style="font-size: 0.95em; margin-top: 8px; color: var(--text-muted);">Supports multiple .mid and .midi selection</small>
+            <div id="file-name-display" style="text-align: center; color: var(--primary); font-weight: 700; margin-top: 16px; min-height: 24px;"></div>
+            <input type="file" id="midi-upload" accept=".mid,.midi" multiple style="display: none;" onchange="handleFileSelect(this)">
+            <button type="button" class="btn-neu" style="margin-top: 14px;" onclick="browseMidiFiles()">Or Browse Files</button>
+          </label>
+
+          <!-- Conversion Settings Card -->
+          <div class="neu-card" style="display: flex; flex-direction: column; justify-content: center;">
+            <div class="section-header">⚙ CONVERSION SETTINGS</div>
+
+            <div style="display: flex; flex-direction: column; gap: 24px;">
+              <div class="control-group">
+                <label>TARGET INSTRUMENT MODE</label>
+                <select id="convert-target" class="input-neu" style="font-size: 0.95em;">
+                  <option value="Both">Both (22K Half & 15K Simple)</option>
+                  <option value="22K">22-Keys (Half Note)</option>
+                  <option value="15K">15-Keys (Simple C-Major)</option>
+                  <option value="Violin">Violin (Sustain Mode)</option>
+                </select>
+              </div>
+
+              <div class="control-group">
+                <label>PITCH SHIFT (OCTAVES): <span id="val-pitch" style="color: var(--primary);">0</span></label>
+                <input type="range" id="slider-pitch" min="-2" max="2" step="1" value="0" oninput="document.getElementById('val-pitch').innerText=this.value">
+                <div class="slider-limits"><span>-2 Oct</span><span>+2 Oct</span></div>
+              </div>
+
+              <button class="btn-neu accent" style="padding: 16px; font-size: 1.1em; justify-content: center;" onclick="convertMidi()">CONVERT ALL FILES</button>
+
+              <div class="control-group">
+                <label>Conversion Output Log</label>
+                <div id="convert-log" class="neu-card-inset" style="height: 140px; overflow-y: auto; font-family: monospace; font-size: 0.85em; color: var(--text-secondary); white-space: pre-wrap;">Ready to convert...</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+
+      <!-- ═══ 6. SETTINGS TAB ═══ -->
+      <section id="settings" class="tab-content">
+        <div class="full-height-grid">
+
+          <div class="neu-card" style="display: flex; flex-direction: column; justify-content: center;">
+            <div class="section-header">📂 LIBRARY PATH</div>
+            <p style="color: var(--text-secondary); font-size: 0.92em; margin-bottom: 20px;">
+              Choose the directory where your song files (.txt) are read from and where newly converted MIDI files are saved.
+            </p>
+
+            <div class="control-group" style="margin-bottom: 24px;">
+              <label>SONG FOLDER DIRECTORY</label>
+              <div style="display: flex; gap: 10px;">
+                <input type="text" id="set-folder" class="input-neu" readonly placeholder="No folder selected">
+                <button class="btn-neu" onclick="browseFolderSafe()">Browse</button>
+              </div>
+            </div>
+
+            <button class="btn-neu accent" style="padding: 14px; font-size: 1em; justify-content: center;" onclick="saveSettings()">SAVE ALL SETTINGS</button>
+          </div>
+
+          <div class="neu-card" style="display: flex; flex-direction: column; justify-content: center;">
+            <div class="section-header">⌨ GLOBAL HOTKEYS</div>
+            <p style="color: var(--text-secondary); font-size: 0.92em; margin-bottom: 20px;">
+              These keys work globally in Windows even when you are focused inside Heartopia!
+            </p>
+
+            <div style="display: flex; flex-direction: column; gap: 20px; margin-bottom: 24px;">
+              <div class="control-group">
+                <label>PLAY / PAUSE HOTKEY</label>
+                <div style="display: flex; align-items: center; gap: 12px;">
+                  <button id="btn-bind-play" class="btn-neu" style="min-width: 120px; justify-content: center;" onclick="listenForKey('play')">F4</button>
+                  <span style="font-size: 0.85em; color: var(--text-muted);">Click button then press any key to bind</span>
+                </div>
+              </div>
+
+              <div class="control-group">
+                <label>STOP HOTKEY</label>
+                <div style="display: flex; align-items: center; gap: 12px;">
+                  <button id="btn-bind-stop" class="btn-neu" style="min-width: 120px; justify-content: center;" onclick="listenForKey('stop')">F5</button>
+                  <span style="font-size: 0.85em; color: var(--text-muted);">Click button then press any key to bind</span>
+                </div>
+              </div>
+            </div>
+
+            <button class="btn-neu accent" style="padding: 14px; font-size: 1em; justify-content: center;" onclick="saveSettings()">SAVE ALL SETTINGS</button>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ═══ 5. ASSIST AUTOMATION TAB ═══ -->
+      <section id="assist" class="tab-content">
+        <div class="assist-container">
+
+          <!-- Unified Top Bar: Connection & Global Vision Settings -->
+          <div class="assist-top-bar-grid">
+            
+            <!-- Connection Card -->
+            <div class="card-neu" style="display: flex; flex-direction: column; justify-content: space-between; gap: 12px; padding: 18px 20px;">
+              <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                  <span style="font-size: 1.7em;">🎮</span>
+                  <div>
+                    <h3 style="margin: 0; font-size: 1.05em; font-weight: 800; color: var(--text);">Heartopia Game Connection</h3>
+                    <p style="margin: 0; font-size: 0.8em; color: var(--text-secondary);">Direct process link to Heartopia (xdt.exe). Hotkeys & automations strictly halt when alt-tabbed.</p>
+                  </div>
+                </div>
+                <span id="assist-status-badge" class="badge" style="font-size: 0.82em; padding: 5px 12px; border: 1px solid rgba(239, 68, 68, 0.4); color: var(--danger);">Disconnected</span>
+              </div>
+
+              <div class="flex-row gap-sm" style="align-items: center; flex-wrap: wrap;">
+                <select id="sel-assist-window" class="input-neu" style="flex: 1; min-width: 180px; padding: 8px 30px 8px 12px; font-size: 0.88em;">
+                  <option value="Heartopia">Heartopia (xdt.exe)</option>
+                </select>
+                <button class="btn-neu" onclick="refreshAssistWindows()" title="Refresh Game Window List">↻</button>
+                <button id="btn-assist-connect" class="btn-neu accent" onclick="toggleAssistConnection()">Connect Game</button>
+              </div>
+            </div>
+
+            <!-- Global Vision Controls Card -->
+            <div class="card-neu" style="display: flex; flex-direction: column; justify-content: space-between; gap: 12px; padding: 18px 20px;">
+              <div class="flex-row" style="justify-content: space-between; align-items: center;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="font-size: 1.2em;">⚙️</span>
+                  <span style="font-size: 0.9em; font-weight: 800; color: var(--text);">GLOBAL VISION ENGINE</span>
+                </div>
+                <span class="badge" style="font-size: 0.74em; color: var(--accent-cyan); background: rgba(6, 182, 212, 0.1);">Full Color RGB Matching</span>
+              </div>
+
+              <div class="control-group" style="margin: 0;">
+                <div class="flex-row" style="justify-content: space-between; align-items: center;">
+                  <label style="margin: 0; font-size: 0.82em;">MATCH CONFIDENCE: <span id="val-assist-conf" style="color: var(--accent-cyan); font-weight: 800;">0.80</span></label>
+                  <span style="font-size: 0.74em; color: var(--text-muted);">In-Memory Template Matching</span>
+                </div>
+                <input type="range" id="slider-assist-conf" min="0.5" max="1.0" step="0.05" value="0.8" oninput="document.getElementById('val-assist-conf').innerText = parseFloat(this.value).toFixed(2); updateAssistSettings();" style="margin-top: 4px;">
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Symmetrical 6-Card Assist Grid -->
+          <div class="assist-cards-grid full-grid">
+
+            <!-- 1. Auto Walk -->
+            <div class="card-neu assist-card" id="card-assist-walk">
+              <div class="assist-card-header">
+                <div class="assist-card-title">
+                  <span class="assist-icon">🚶</span>
+                  <span>Auto Walk</span>
+                </div>
+                <button class="btn-hotkey-badge" id="hotkey-walk" onclick="listenForAssistHotkey('walk', event)" title="Click to bind hotkey">F1</button>
+              </div>
+              <p class="assist-desc">Simulates continuous forward traversal (W key). Automatically stops when you switch windows.</p>
+              <button id="btn-assist-walk" class="btn-neu" onclick="toggleAssistFeature('walk', event)">Enable Walk</button>
+            </div>
+
+            <!-- 2. Cam Lock -->
+            <div class="card-neu assist-card" id="card-assist-cam">
+              <div class="assist-card-header">
+                <div class="assist-card-title">
+                  <span class="assist-icon">🎥</span>
+                  <span>Cam Lock</span>
+                </div>
+                <button class="btn-hotkey-badge" id="hotkey-cam" onclick="listenForAssistHotkey('cam', event)" title="Click to bind hotkey">F2</button>
+              </div>
+              <p class="assist-desc">Holds mouse look button for free camera rotation. Pauses when alt-tabbed.</p>
+              <div class="flex-row" style="justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                <span style="font-size: 0.82em; font-weight: 700; color: var(--text-secondary);">Mouse Button:</span>
+                <div class="segmented-control" style="margin: 0;">
+                  <button id="cam-left" class="segment-btn" onclick="setCamMouseButton('Left')">Left</button>
+                  <button id="cam-right" class="segment-btn active" onclick="setCamMouseButton('Right')">Right</button>
+                </div>
+              </div>
+              <button id="btn-assist-cam" class="btn-neu" onclick="toggleAssistFeature('cam', event)">Enable Cam Lock</button>
+            </div>
+
+            <!-- 3. Auto Harvest (Combined: Crops, Trees, Rocks & Bushes) -->
+            <div class="card-neu assist-card" id="card-assist-harvest">
+              <div class="assist-card-header">
+                <div class="assist-card-title">
+                  <span class="assist-icon">🌾</span>
+                  <span>Auto Harvest</span>
+                </div>
+                <button class="btn-hotkey-badge" id="hotkey-harvest" onclick="listenForAssistHotkey('harvest', event)" title="Click to bind hotkey">F3</button>
+              </div>
+              <p class="assist-desc">Unified crops & foraging automation with screen detection for Trees, Rocks & Bushes.</p>
+              
+              <div class="flex-row" style="justify-content: space-between; align-items: center; margin: 8px 0 8px 0;">
+                <span style="font-size: 0.82em; font-weight: 700; color: var(--text-secondary);">Method:</span>
+                <div class="segmented-control" style="margin: 0;">
+                  <button id="card-harvest-method-spam" class="segment-btn active" onclick="setHarvestMethod('spam')">⚡ Spam</button>
+                  <button id="card-harvest-method-vision" class="segment-btn" onclick="setHarvestMethod('vision')">👁️ Vision</button>
+                </div>
+              </div>
+
+              <div class="assist-card-summary-box">
+                <div class="summary-line">
+                  <span class="summary-label">Active Mode:</span>
+                  <span class="summary-val" id="summary-harvest-mode">⚡ F Key (Spam 0.10s)</span>
+                </div>
+                <div class="summary-line">
+                  <span class="summary-label">Vision Targets:</span>
+                  <span class="badge badge-accent" id="summary-harvest-count" style="font-size: 0.76em; padding: 2px 8px;">8 Targets Cached</span>
+                </div>
+                <div style="font-size: 0.72em; color: var(--text-muted); margin-top: 4px; line-height: 1.3;">
+                  💡 More samples = higher detection accuracy.
+                </div>
+              </div>
+
+              <div class="assist-card-actions">
+                <button class="btn-neu" onclick="openHarvestModal()" style="font-size: 0.82em; padding: 7px 10px;">
+                  <span>⚙️</span>
+                  <span>Configure</span>
+                </button>
+                <button id="btn-assist-harvest" class="btn-neu" style="flex: 1;" onclick="toggleAssistFeature('harvest', event)">Enable Harvest</button>
+              </div>
+            </div>
+
+            <!-- 4. Auto Cook -->
+            <div class="card-neu assist-card" id="card-assist-cook">
+              <div class="assist-card-header">
+                <div class="assist-card-title">
+                  <span class="assist-icon">👨‍🍳</span>
+                  <span>Auto Cook</span>
+                </div>
+                <button class="btn-hotkey-badge" id="hotkey-cook" onclick="listenForAssistHotkey('cook', event)" title="Click to bind hotkey">F6</button>
+              </div>
+              <p class="assist-desc">Automated stove mini-game: recognizes heat indicator, start, serve, and recipes.</p>
+
+              <div class="assist-card-summary-box">
+                <div class="summary-line">
+                  <span class="summary-label">Cooking Engine:</span>
+                  <span class="summary-val">Auto-click Stove & Heat</span>
+                </div>
+                <div class="summary-line">
+                  <span class="summary-label">Targets:</span>
+                  <span class="badge badge-accent" id="summary-cook-count" style="font-size: 0.76em; padding: 2px 8px;">5 Targets</span>
+                </div>
+              </div>
+
+              <div class="assist-card-actions">
+                <button class="btn-neu" onclick="openCookModal()" style="font-size: 0.82em; padding: 7px 10px;">
+                  <span>⚙️</span>
+                  <span>Configure</span>
+                </button>
+                <button id="btn-assist-cook" class="btn-neu" style="flex: 1;" onclick="toggleAssistFeature('cook', event)">Enable Cook</button>
+              </div>
+            </div>
+
+            <!-- 5. Snow Puzzle Bot -->
+            <div class="card-neu assist-card" id="card-assist-snow">
+              <div class="assist-card-header">
+                <div class="assist-card-title">
+                  <span class="assist-icon">❄️</span>
+                  <span>Snow Puzzle Bot</span>
+                </div>
+                <button class="btn-hotkey-badge" id="hotkey-snow" onclick="listenForAssistHotkey('snow', event)" title="Click to bind hotkey">F7</button>
+              </div>
+              <p class="assist-desc">High-precision pattern matcher for the snow puzzle mini-game and reward claim.</p>
+
+              <div class="assist-card-summary-box">
+                <div class="summary-line">
+                  <span class="summary-label">Puzzle Engine:</span>
+                  <span class="summary-val">Auto-solve & Claim</span>
+                </div>
+                <div class="summary-line">
+                  <span class="summary-label">Targets:</span>
+                  <span class="badge badge-accent" id="summary-snow-count" style="font-size: 0.76em; padding: 2px 8px;">4 Targets</span>
+                </div>
+              </div>
+
+              <div class="assist-card-actions">
+                <button class="btn-neu" onclick="openSnowModal()" style="font-size: 0.82em; padding: 7px 10px;">
+                  <span>⚙️</span>
+                  <span>Configure</span>
+                </button>
+                <button id="btn-assist-snow" class="btn-neu" style="flex: 1;" onclick="toggleAssistFeature('snow', event)">Enable Snow Bot</button>
+              </div>
+            </div>
+
+            <!-- 6. Auto Jump -->
+            <div class="card-neu assist-card" id="card-assist-jump">
+              <div class="assist-card-header">
+                <div class="assist-card-title">
+                  <span class="assist-icon">🦘</span>
+                  <span>Auto Jump</span>
+                </div>
+                <button class="btn-hotkey-badge" id="hotkey-jump" onclick="listenForAssistHotkey('jump', event)" title="Click to bind hotkey">F8</button>
+              </div>
+              <p class="assist-desc">Continuous spacebar jumping automation. Halts immediately when alt-tabbed.</p>
+              <div class="assist-card-summary-box" style="visibility: hidden;">
+                <div class="summary-line"><span class="summary-label">-</span></div>
+                <div class="summary-line"><span class="summary-label">-</span></div>
+              </div>
+              <button id="btn-assist-jump" class="btn-neu" onclick="toggleAssistFeature('jump', event)">Enable Jump</button>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ═══ 7. GUIDE & INFO TAB ═══ -->
+      <section id="guide" class="tab-content">
+        <div style="text-align: center; margin-bottom: 24px;">
+          <h2 style="font-size: 2.6em; font-weight: 900; letter-spacing: 2px; background: linear-gradient(135deg, var(--text) 0%, var(--primary-light) 50%, var(--accent-cyan) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 8px;">PIANIPIA V8</h2>
+          <p style="color: var(--text-secondary); font-size: 1.1em; max-width: 600px; margin: 0 auto; font-weight: 500;">The Ultimate Automated Instrument Player & Assistant Suite for Heartopia.</p>
+          <div style="margin-top: 16px; display: flex; gap: 10px; justify-content: center;">
+            <a href="https://github.com/KaleidSkylark/Heartopia-Instrument-MIDI" target="_blank" class="btn-neu" style="text-decoration: none; font-size: 0.88em; padding: 8px 18px; color: var(--primary-light); border-color: rgba(157, 93, 246, 0.4);">
+              <svg height="18" width="18" viewBox="0 0 16 16" fill="currentColor" style="vertical-align: text-bottom; margin-right: 6px;"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>
+              View on GitHub
+            </a>
+          </div>
+        </div>
+
+        <div class="info-grid">
+          <!-- Studio Editor -->
+          <div class="info-card">
+            <h3>📝 Studio Editor</h3>
+            <p style="color: var(--text-secondary); margin-bottom: 8px;">Powered by the Monaco Engine (VS Code).</p>
+            <ul style="padding-left: 20px; line-height: 1.6; font-size: 0.88em; color: var(--text-secondary);">
+              <li><b>Hyper-Performance:</b> Smoothly handles 1,000,000+ lines of MIDI script.</li>
+              <li><b>Live Visual Sync:</b> Canvas visualizer tracks your current code line in real-time.</li>
+              <li><b>Click-to-Find:</b> Click any note in the visualizer to jump straight to its code.</li>
+            </ul>
+          </div>
+
+          <!-- MIDI Converter -->
+          <div class="info-card">
+            <h3>🎹 MIDI Converter</h3>
+            <p style="color: var(--text-secondary); margin-bottom: 8px;">Drag, drop, and convert instantly.</p>
+            <ul style="padding-left: 20px; line-height: 1.6; font-size: 0.88em; color: var(--text-secondary);">
+              <li><b>Dual Generation:</b> Automatically creates both 22-Key and 15-Key versions.</li>
+              <li><b>Pitch Shifting:</b> Adjust note octaves during conversion for the perfect sound.</li>
+              <li><b>Batch Processing:</b> Convert dozens of files in seconds.</li>
+            </ul>
+            <div style="margin-top: 14px; padding: 12px 14px; border-left: 4px solid #10b981; background: rgba(16, 185, 129, 0.08); border-radius: var(--radius-xs);">
+              <strong style="color: #10b981;">Audio to MIDI Converter:</strong><br>
+              <a href="https://eldoraudio.com/products/piano-audio-to-midi" target="_blank" style="text-decoration: none; color: #10b981; font-weight: 700;">
+                eldoraudio Piano Audio to MIDI Converter ↗
+              </a><br>
+              <span style="font-size: 0.82em; font-style: italic; opacity: 0.8; color: var(--text-secondary);">* Note: Converts better if the audio is Piano Cover or Synthesia.</span>
+            </div>
+          </div>
+
+          <!-- Library & Cloud -->
+          <div class="info-card">
+            <h3>☁ Library & Cloud</h3>
+            <p style="color: var(--text-secondary); margin-bottom: 8px;">Discover and manage your music.</p>
+            <ul style="padding-left: 20px; line-height: 1.6; font-size: 0.88em; color: var(--text-secondary);">
+              <li><b>Playlist Queue:</b> Stack up songs, set them on loop, and let them play.</li>
+              <li><b>Community Cloud:</b> Search, download, and upload thousands of community scripts instantly.</li>
+            </ul>
+          </div>
+
+          <!-- Important Notes -->
+          <div class="info-card">
+            <h3>⚠ Important Notes</h3>
+            <p style="font-size: 0.88em; line-height: 1.6; color: var(--text-secondary); margin-bottom: 6px;">
+              <b>For the best experience:</b>
+            </p>
+            <ul style="padding-left: 20px; line-height: 1.6; font-size: 0.88em; color: var(--text-secondary);">
+              <li><b>Permissions:</b> Always run the application as Administrator if keystrokes or mouse clicks are being blocked by the game.</li>
+              <li><b>Auto-Pause:</b> Playback pauses when you switch away from the game window.</li>
+            </ul>
+          </div>
+
+          <!-- External Game Mods -->
+          <div class="info-card">
+            <h3>🎮 External Game Mods</h3>
+            <p style="color: var(--text-secondary); margin-bottom: 8px; font-size: 0.88em;">Since the Assist Tab was removed, check out these free community tools:</p>
+            <ul style="padding-left: 20px; line-height: 1.6; font-size: 0.88em; color: var(--text-secondary);">
+              <li><a href="https://www.unknowncheats.me/forum/other-games/747079-heartopia-helper.html" target="_blank" style="color: var(--primary); text-decoration: none; font-weight: 700;">Heartopia Helper ↗</a></li>
+              <li><a href="https://www.unknowncheats.me/forum/other-games/736498-heartopia-buddy-teleport-auto-farm.html" target="_blank" style="color: var(--primary); text-decoration: none; font-weight: 700;">Heartopia Buddy (Teleport & Auto Farm) ↗</a></li>
+            </ul>
+            <div style="margin-top: 12px; padding: 12px 14px; border-radius: var(--radius-xs); background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.4);">
+              <span style="color: var(--danger); font-weight: 800; font-size: 0.88em;">⚠️ WARNING: AVOID EXCESSIVE CHEATING</span>
+              <p style="color: var(--text-secondary); font-size: 0.82em; margin-top: 5px; margin-bottom: 0; line-height: 1.4;">
+                Using these mods has led to other players receiving warnings and bans (3 days, 7 days, 1 month). Use at your own risk!
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 36px; padding-bottom: 24px; color: var(--text-muted); font-size: 0.88em; font-weight: 600;">
+          Created by <span style="color: var(--primary); font-weight: 800;">KaleidSkylark</span>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Modular Controllers -->
+  <script src="js/modules/common.js"></script>
+  <script src="js/modules/navigation.js"></script>
+  <script src="js/modules/audio-engine.js"></script>
+  <script src="js/modules/editor.js"></script>
+  <script src="js/modules/playlist.js"></script>
+  <script src="js/modules/player.js"></script>
+  <script src="js/modules/online.js"></script>
+  <script src="js/modules/converter.js"></script>
+  <script src="js/modules/settings.js"></script>
+  <script src="js/modules/assist.js"></script>
+  <script src="js/modules/window.js"></script>
+
+  <!-- App Bootstrap Orchestrator -->
+  <script src="js/app.js"></script>
+</body>
+</html>

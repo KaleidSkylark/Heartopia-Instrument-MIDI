@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic Island — PianiPia V8</title>
+  <link rel="stylesheet" href="css/overlay.css">
+</head>
+<body>
+  <div id="island-container">
+    <div id="dynamic-island" class="island-pill dot">
+
+      <!-- ─── 0. Dot View (Idle Minimal Circle) ─── -->
+      <div class="island-dot-view" id="dot-view" title="PianiPia V8 Island (Click to expand, Drag to move)">
+        <div class="dot-core">
+          <span class="dot-icon">🎵</span>
+          <span class="dot-pulse"></span>
+        </div>
+      </div>
+
+      <!-- ─── 1. Compact View (iPhone Pill) ─── -->
+      <div class="island-compact-view" id="compact-view">
+        <div class="compact-left">
+          <div class="compact-disc" id="compact-disc">
+            <span class="disc-icon">🎵</span>
+          </div>
+          <span class="compact-title" id="compact-song-title">PianiPia V8 Standby</span>
+        </div>
+
+        <div class="compact-right">
+          <!-- Assist indicators -->
+          <div class="compact-assist-indicators">
+            <span class="indicator-dot walk" id="indicator-walk" title="Auto Walk active">🚶</span>
+            <span class="indicator-dot cam" id="indicator-cam" title="Cam Lock active">🎥</span>
+            <span class="indicator-dot harvest" id="indicator-harvest" title="Auto Harvest active">🌾</span>
+            <span class="indicator-dot tree_rock" id="indicator-tree_rock" title="Tree & Rock Harvest active">🌲</span>
+          </div>
+
+          <!-- Dynamic Waveform Equalizer -->
+          <div class="compact-eq-bars" id="compact-eq">
+            <span class="eq-bar bar-1"></span>
+            <span class="eq-bar bar-2"></span>
+            <span class="eq-bar bar-3"></span>
+            <span class="eq-bar bar-4"></span>
+          </div>
+
+          <span class="compact-time-badge" id="compact-time">--:--</span>
+        </div>
+      </div>
+
+      <!-- ─── 2. Expanded View (Full Dynamic Island Player) ─── -->
+      <div class="island-expanded-view" id="expanded-view">
+        <!-- Top Row: Artwork + Title + Header Actions -->
+        <div class="expanded-top-row">
+          <div class="album-art-wrap" id="expanded-art-disc">
+            <div class="vinyl-record">
+              <span class="vinyl-center">🎹</span>
+            </div>
+          </div>
+
+          <div class="expanded-track-details">
+            <div class="expanded-song-title" id="expanded-song-title">No song playing</div>
+            <div class="expanded-subtitle-row">
+              <span class="pill-badge" id="expanded-status-badge">Standby</span>
+              <span class="expanded-engine-tag">Heartopia Suite</span>
+            </div>
+          </div>
+
+          <div class="expanded-window-actions">
+            <button class="island-action-btn" id="btn-collapse-island" onclick="collapseOverlay()" title="Collapse to Dot / Compact">─</button>
+            <button class="island-action-btn" id="btn-focus-main" onclick="focusMainApp()" title="Focus Main PianiPia Window">↗</button>
+            <button class="island-action-btn close-btn" id="btn-close-island" onclick="closeOverlay()" title="Close Dynamic Island">✕</button>
+          </div>
+        </div>
+
+        <!-- Middle Row: Scrubber & Timers -->
+        <div class="expanded-scrubber-section">
+          <div class="scrubber-bar" id="scrubber-track">
+            <div class="scrubber-fill" id="scrubber-fill"></div>
+            <div class="scrubber-thumb" id="scrubber-thumb"></div>
+          </div>
+          <div class="scrubber-timestamps">
+            <span id="time-elapsed">00:00</span>
+            <span id="time-total">00:00</span>
+          </div>
+        </div>
+
+        <!-- Bottom Row: Media Controls + Assist Toggles -->
+        <div class="expanded-bottom-row">
+          <!-- Playback Controls -->
+          <div class="island-media-controls">
+            <button class="media-btn" id="btn-island-stop" onclick="overlayStop()" title="Stop [HotKey: F5 / num8]">
+              ⏹
+            </button>
+            <button class="media-btn play-main" id="btn-island-play" onclick="overlayPlayPause()" title="Play / Pause [HotKey: F4 / num7]">
+              <span id="play-icon">▶</span>
+            </button>
+          </div>
+
+          <!-- Quick Assist Toggles -->
+          <div class="island-assist-controls">
+            <button class="assist-pill-btn" id="btn-pill-walk" onclick="overlayToggleFeature('walk')" title="Auto Walk (W) [HotKey: F1]">
+              <span class="btn-emoji">🚶</span> Walk
+            </button>
+            <button class="assist-pill-btn" id="btn-pill-cam" onclick="overlayToggleFeature('cam')" title="Cam Lock (RMB) [HotKey: F2]">
+              <span class="btn-emoji">🎥</span> Cam
+            </button>
+            <button class="assist-pill-btn" id="btn-pill-harvest" onclick="overlayToggleFeature('harvest')" title="Auto Harvest [HotKey: F3]">
+              <span class="btn-emoji">🌾</span> Harvest
+            </button>
+            <button class="assist-pill-btn" id="btn-pill-tree_rock" onclick="overlayToggleFeature('tree_rock')" title="Tree & Rock Harvest [HotKey: F9]">
+              <span class="btn-emoji">🌲</span> Tree/Rock
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="js/overlay.js"></script>
+</body>
+</html>
