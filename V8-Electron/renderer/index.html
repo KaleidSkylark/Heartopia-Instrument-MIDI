@@ -672,14 +672,14 @@
         <div class="full-height-grid">
 
           <!-- Dropzone -->
-          <label class="upload-zone" id="drop-zone">
+          <div class="upload-zone" id="drop-zone" onclick="browseMidiFiles(event)">
             <span style="font-size: 4em; margin-bottom: 16px;">📂</span>
             <span style="font-weight: 800; font-size: 1.6em; color: var(--text);">Drag & Drop MIDI Files Here</span>
             <small style="font-size: 0.95em; margin-top: 8px; color: var(--text-muted);">Supports multiple .mid and .midi selection</small>
             <div id="file-name-display" style="text-align: center; color: var(--primary); font-weight: 700; margin-top: 16px; min-height: 24px;"></div>
             <input type="file" id="midi-upload" accept=".mid,.midi" multiple style="display: none;" onchange="handleFileSelect(this)">
-            <button type="button" class="btn-neu" style="margin-top: 14px;" onclick="browseMidiFiles()">Or Browse Files</button>
-          </label>
+            <button type="button" class="btn-neu" style="margin-top: 14px;" onclick="browseMidiFiles(event)">Or Browse Files</button>
+          </div>
 
           <!-- Conversion Settings Card -->
           <div class="neu-card" style="display: flex; flex-direction: column; justify-content: center;">

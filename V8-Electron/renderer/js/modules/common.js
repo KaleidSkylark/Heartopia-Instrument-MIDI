@@ -4,6 +4,7 @@
 
 var electron = (window.nodeRequire || window.require)('electron');
 var ipcRenderer = electron.ipcRenderer;
+window.electron = electron;
 window.ipcRenderer = ipcRenderer;
 
 // ─── Global State ───

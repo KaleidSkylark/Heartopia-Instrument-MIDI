@@ -2,26 +2,71 @@
 // Module: MIDI File Converter
 // ═══════════════════════════════════════════════════════════════════
 
+function getElectronModule() {
+  try {
+    if (window.electron) return window.electron;
+    if (typeof window.nodeRequire === 'function') return window.nodeRequire('electron');
+    if (typeof require === 'function') return require('electron');
+  } catch (e) {
+    console.warn('[Converter] Could not access Electron module:', e);
+  }
+  return null;
+}
+
+function getFilePath(file) {
+  if (!file) return null;
+  if (typeof file === 'string') return file;
+
+  try {
+    const el = getElectronModule();
+    if (el && el.webUtils && typeof el.webUtils.getPathForFile === 'function') {
+      const p = el.webUtils.getPathForFile(file);
+      if (p) return p;
+    }
+  } catch (e) {
+    console.warn('[Converter] webUtils.getPathForFile error:', e);
+  }
+
+  return file.path || null;
+}
+
+function updateFileDisplay(files) {
+  const display = document.getElementById('file-name-display');
+  if (!display) return;
+  if (!files || files.length === 0) {
+    display.innerText = '';
+    return;
+  }
+  display.innerText = `${files.length} file(s) selected:\n` +
+    files.map(p => (typeof p === 'string' ? p.split(/[\\/]/).pop() : 'MIDI File')).join(', ');
+}
+
 function handleFileSelect(input) {
-  if (input.files && input.files.length > 0) {
-    window.selectedMidiFiles = Array.from(input.files).map(f => f.path);
-    const display = document.getElementById('file-name-display');
-    if (display) {
-      display.innerText = `${window.selectedMidiFiles.length} file(s) selected:\n` +
-        window.selectedMidiFiles.map(p => p.split(/[\\/]/).pop()).join(', ');
+  if (input && input.files && input.files.length > 0) {
+    const paths = Array.from(input.files)
+      .map(getFilePath)
+      .filter(p => p && (p.toLowerCase().endsWith('.mid') || p.toLowerCase().endsWith('.midi')));
+
+    if (paths.length > 0) {
+      window.selectedMidiFiles = paths;
+      updateFileDisplay(window.selectedMidiFiles);
     }
   }
 }
 
-async function browseMidiFiles() {
-  const filePaths = await ipcRenderer.invoke('dialog:browseMidi');
-  if (filePaths && filePaths.length > 0) {
-    window.selectedMidiFiles = filePaths;
-    const display = document.getElementById('file-name-display');
-    if (display) {
-      display.innerText = `${window.selectedMidiFiles.length} file(s) selected:\n` +
-        filePaths.map(p => p.split(/[\\/]/).pop()).join(', ');
+async function browseMidiFiles(event) {
+  if (event) {
+    event.stopPropagation();
+  }
+  try {
+    const filePaths = await ipcRenderer.invoke('dialog:browseMidi');
+    if (filePaths && filePaths.length > 0) {
+      window.selectedMidiFiles = filePaths;
+      updateFileDisplay(window.selectedMidiFiles);
     }
+  } catch (err) {
+    console.error('[Converter] Error browsing MIDI files:', err);
+    appLog('Error selecting MIDI files: ' + err.message, 'error');
   }
 }
 
@@ -31,21 +76,39 @@ document.addEventListener('DOMContentLoaded', () => {
   if (dropZone) {
     dropZone.addEventListener('dragover', e => {
       e.preventDefault();
+      e.stopPropagation();
       dropZone.classList.add('dragover');
     });
-    dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+    dropZone.addEventListener('dragleave', e => {
+      e.preventDefault();
+      e.stopPropagation();
+      dropZone.classList.remove('dragover');
+    });
     dropZone.addEventListener('drop', e => {
       e.preventDefault();
+      e.stopPropagation();
       dropZone.classList.remove('dragover');
-      if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-        window.selectedMidiFiles = Array.from(e.dataTransfer.files)
-          .filter(f => f.name.toLowerCase().endsWith('.mid') || f.name.toLowerCase().endsWith('.midi'))
-          .map(f => f.path);
-        const display = document.getElementById('file-name-display');
-        if (display) {
-          display.innerText = `${window.selectedMidiFiles.length} MIDI file(s) dropped:\n` +
-            window.selectedMidiFiles.map(p => p.split(/[\\/]/).pop()).join(', ');
+      if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+        const paths = Array.from(e.dataTransfer.files)
+          .map(getFilePath)
+          .filter(p => p && (p.toLowerCase().endsWith('.mid') || p.toLowerCase().endsWith('.midi')));
+
+        if (paths.length > 0) {
+          window.selectedMidiFiles = paths;
+          updateFileDisplay(window.selectedMidiFiles);
+        } else {
+          showModal('Invalid Files', 'Please drop valid .mid or .midi files!');
         }
+      }
+    });
+  }
+
+  // Listen for convert_result events from python bridge
+  if (typeof ipcRenderer !== 'undefined' && ipcRenderer.on) {
+    ipcRenderer.on('convert_result', (_, msg) => {
+      const logEl = document.getElementById('convert-log');
+      if (logEl && msg && msg.message) {
+        logEl.innerText = msg.message;
       }
     });
   }
@@ -57,12 +120,18 @@ async function convertMidi() {
     return;
   }
 
+  const convertBtn = document.querySelector('#add button.btn-neu.accent');
   const target = document.getElementById('convert-target')?.value || 'Both';
   const pitch = parseInt(document.getElementById('slider-pitch')?.value || 0);
 
   const logEl = document.getElementById('convert-log');
   if (logEl) logEl.innerText = 'Processing conversion with Python engine...';
-  appLog(`Starting conversion of ${window.selectedMidiFiles.length} files...`, 'info');
+  appLog(`Starting conversion of ${window.selectedMidiFiles.length} file(s)...`, 'info');
+
+  if (convertBtn) {
+    convertBtn.disabled = true;
+    convertBtn.innerText = 'CONVERTING...';
+  }
 
   try {
     const res = await ipcRenderer.invoke('converter:run', {
@@ -72,21 +141,29 @@ async function convertMidi() {
     });
 
     if (logEl) {
-      logEl.innerText = res.log || (res.ok ? 'Conversion finished successfully!' : 'Conversion error occurred.');
+      logEl.innerText = res.log || (res.ok ? 'Conversion finished successfully!' : (res.error || 'Conversion error occurred.'));
     }
 
-    if (res.ok) {
+    if (res && res.ok) {
       appLog('Conversion successful! Reloading playlist library...', 'success');
-      showModal('Conversion Complete', 'Your MIDI files were successfully converted and saved to your notes library!');
-      if (typeof loadPlaylistData === 'function') loadPlaylistData();
+      showModal('Conversion Complete', 'Your MIDI files were successfully converted and saved to your notes library!\n\n' + (res.log || ''));
+      if (typeof loadPlaylistData === 'function') {
+        loadPlaylistData();
+      }
     } else {
-      appLog('Conversion failed: ' + (res.error || 'Unknown error'), 'error');
-      showModal('Conversion Failed', res.error || 'An error occurred during Python MIDI conversion.');
+      const errMsg = (res && res.error) || (res && res.log) || 'An error occurred during Python MIDI conversion.';
+      appLog('Conversion failed: ' + errMsg, 'error');
+      showModal('Conversion Failed', errMsg);
     }
   } catch (err) {
     if (logEl) logEl.innerText = 'Conversion failed: ' + err.message;
     appLog('Conversion error: ' + err.message, 'error');
     showModal('Error', err.message);
+  } finally {
+    if (convertBtn) {
+      convertBtn.disabled = false;
+      convertBtn.innerText = 'CONVERT ALL FILES';
+    }
   }
 }
 

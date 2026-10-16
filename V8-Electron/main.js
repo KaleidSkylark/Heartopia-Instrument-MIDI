@@ -253,6 +253,7 @@ let assistState = {
   use_grayscale: false
 };
 const assistResolvers = {};
+let convertResolver = null;
 
 function handlePythonMessage(msg) {
   if (msg.type === 'ready') {
@@ -272,6 +273,10 @@ function handlePythonMessage(msg) {
     mainWindow?.webContents.send('status_update', playerState);
     overlayWindow?.webContents.send('player_status', playerState);
   } else if (msg.type === 'convert_result') {
+    if (convertResolver) {
+      convertResolver(msg);
+      convertResolver = null;
+    }
     mainWindow?.webContents.send('convert_result', msg);
   } else if (msg.type === 'hotkey_pressed') {
     if (hotkeysPaused) {
@@ -972,15 +977,35 @@ function setupIPC() {
   });
 
   // Convert MIDI files
-  ipcMain.handle('converter:run', (_, data) => {
-    sendPythonCommand({
-      cmd: 'convert',
-      files: data.files,
-      target: data.target,
-      pitch: data.pitch,
-      folder: config.note_folder
+  ipcMain.handle('converter:run', async (_, data) => {
+    if (!data || !data.files || data.files.length === 0) {
+      return { ok: false, error: 'No files provided for conversion.' };
+    }
+    return new Promise((resolve) => {
+      const timeout = setTimeout(() => {
+        if (convertResolver) {
+          convertResolver = null;
+          resolve({ ok: false, error: 'Conversion timed out after 60 seconds.' });
+        }
+      }, 60000);
+
+      convertResolver = (msg) => {
+        clearTimeout(timeout);
+        resolve({
+          ok: !!msg.ok,
+          log: msg.message || '',
+          error: msg.ok ? undefined : (msg.message || 'Conversion failed.')
+        });
+      };
+
+      sendPythonCommand({
+        cmd: 'convert',
+        files: data.files,
+        target: data.target,
+        pitch: data.pitch,
+        folder: config.note_folder
+      });
     });
-    return { ok: true };
   });
 
   // Online (Supabase)

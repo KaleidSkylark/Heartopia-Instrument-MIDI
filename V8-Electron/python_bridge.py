@@ -339,27 +339,43 @@ class FakeUploadedFile:
 
 def handle_convert(files, target, pitch, note_folder):
     try:
+        if not note_folder:
+            note_folder = state.conf.get("note_folder", "")
+        if note_folder and not os.path.exists(note_folder):
+            try:
+                os.makedirs(note_folder, exist_ok=True)
+            except Exception as e:
+                emit("convert_result", ok=False, message=f"Failed to create notes folder: {str(e)}")
+                return
+
         state.conf["note_folder"] = note_folder
-        fake_files = [FakeUploadedFile(p) for p in files if os.path.exists(p)]
+        valid_files = [p for p in files if p and os.path.isfile(p)]
+        if not valid_files:
+            emit("convert_result", ok=False, message="No valid or accessible MIDI files found.")
+            return
+
         logs = []
         import mido, statistics
-        for f in fake_files:
-            safe = "".join([c for c in f.filename if c.isalnum() or c in "._- "])
-            tmp = os.path.join(note_folder, f"temp_{safe}")
-            f.save(tmp)
 
-            if target == "Both":
-                modes = [(False, False), (True, False)]
-            elif target == "15K":
-                modes = [(True, False)]
-            elif target == "Violin":
-                modes = [(False, True)]
-            else:
-                modes = [(False, False)]
+        try:
+            pitch_val = int(pitch) if pitch is not None else 0
+        except Exception:
+            pitch_val = 0
 
+        if target == "Both":
+            modes = [(False, False), (True, False)]
+        elif target == "15K":
+            modes = [(True, False)]
+        elif target == "Violin":
+            modes = [(False, True)]
+        else:
+            modes = [(False, False)]
+
+        for file_path in valid_files:
+            file_name = os.path.basename(file_path)
             for is15, is_violin in modes:
                 try:
-                    mid = mido.MidiFile(tmp)
+                    mid = mido.MidiFile(file_path)
                     evs = []
                     for t in mid.tracks:
                         tm = 0
@@ -372,17 +388,17 @@ def handle_convert(files, target, pitch, note_folder):
                     evs.sort(key=lambda x: x[0])
                     raw = [m.note for _, m in evs if m.type == 'note_on']
                     if not raw:
-                        logs.append(f"⚠️ Skipped {f.filename}: No notes found")
+                        logs.append(f"⚠️ Skipped {file_name}: No notes found")
                         continue
 
                     med = statistics.median(raw)
                     if is15:
-                        tc = 72 + (pitch * 12); c_maj = {0,2,4,5,7,9,11}
+                        tc = 72 + (pitch_val * 12); c_maj = {0,2,4,5,7,9,11}
                         shift = max(range(-6,6), key=lambda s: sum(1 for n in raw if ((n+s)%12) in c_maj))
                         trans = shift + int(round((tc - (med + shift)) / 12.0)) * 12
                         valid_15k_notes = sorted(list(MAP_15.keys()))
                     else:
-                        trans = int(round((66 + (pitch * 12) - med) / 12.0)) * 12
+                        trans = int(round((66 + (pitch_val * 12) - med) / 12.0)) * 12
 
                     out = []; last = 0; act = set(); tempo = 500000
                     keymap = MAP_15 if is15 else MAP_22
@@ -448,8 +464,10 @@ def handle_convert(files, target, pitch, note_folder):
                         out.append(f"Keyboard : {k} : KeyUp")
 
                     suffix = "_15K" if is15 else ("_Violin" if is_violin else "_22K")
-                    base_name = os.path.splitext(f.filename)[0]
+                    base_name = os.path.splitext(file_name)[0]
                     clean_name = "".join([c for c in base_name if c.isalnum() or c in " ._-"]).strip()
+                    if not clean_name:
+                        clean_name = "Song"
                     save_name = f"{clean_name}{suffix}.txt"
                     save_path = os.path.join(note_folder, save_name)
 
@@ -459,15 +477,9 @@ def handle_convert(files, target, pitch, note_folder):
                     logs.append(f"✅ Converted: {save_name}")
 
                 except Exception as ex:
-                    logs.append(f"❌ Failed {f.filename}: {str(ex)}")
+                    logs.append(f"❌ Failed {file_name}: {str(ex)}")
 
-            try:
-                if os.path.exists(tmp):
-                    os.remove(tmp)
-            except Exception:
-                pass
-
-        emit("convert_result", ok=True, message="\n".join(logs))
+        emit("convert_result", ok=True, message="\n".join(logs) if logs else "No files converted.")
     except Exception as e:
         emit("convert_result", ok=False, message=f"Error: {str(e)}")
 
