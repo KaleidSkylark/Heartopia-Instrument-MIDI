@@ -37,12 +37,12 @@ jobs:
           pip install pydirectinput pyautogui pynput pillow mido supabase
 
       - name: Install Electron Dependencies
-        working-directory: ./Electron
+        working-directory: ./V8-Electron
         run: |
           npm install
 
       - name: Build PianiPia V8 Executables (Portable & Setup)
-        working-directory: ./Electron
+        working-directory: ./V8-Electron
         run: |
           npx electron-builder --win
 
@@ -50,14 +50,14 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: PianiPia-V8-Windows-x64
-          path: Electron/dist/*.exe
+          path: V8-Electron/dist/*.exe
           if-no-files-found: error
 
       - name: Create GitHub Release (On Tag Push)
         if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v2
         with:
-          files: Electron/dist/*.exe
+          files: V8-Electron/dist/*.exe
           draft: false
           prerelease: false
         env:

@@ -19,6 +19,11 @@
 </p>
 
 <p align="center">
+  <a href="https://github.com/KaleidSkylark/Heartopia-Instrument-MIDI/actions"><img src="https://img.shields.io/badge/GitHub%20Actions-Download%20Automated%20Builds-2088FF?style=for-the-badge&logo=githubactions&logoColor=white" alt="GitHub Actions Automated Builds"></a>
+</p>
+
+<p align="center">
+  <a href="https://github.com/KaleidSkylark/Heartopia-Instrument-MIDI/actions"><b>⚡ GitHub Actions Builds</b></a> •
   <a href="#-versions-overview">Versions Overview</a> •
   <a href="#-interface-preview">Interface Preview</a> •
   <a href="#-running-from-source">Run from Source</a> •
@@ -83,7 +88,7 @@ This repository contains **V6**, **V7**, and **V8** source trees:
 
 | Version | Focus | Included Features |
 | :--- | :--- | :--- |
-| **[V8 (Electron)](Electron/)** <br>*(Flagship Desktop)* | **Modern Dedicated Desktop Suite** | • Dedicated desktop app with frameless Win11 snap layout titlebar<br>• 🏝️ Dynamic Island top-of-screen floating overlay for playing in fullscreen<br>• 📝 Monaco Studio Editor with live piano-roll sync & real-time audio synthesizer preview<br>• 🌾 Auto Harvest (⚡ Spam + 👁️ Multi-Sample Vision Matching for Trees, Rocks & Bushes)<br>• 🎮 Full Assist Engine (Auto Cook, Snow Puzzle, Auto Walk, Cam Lock, Auto Jump, Build Glitch)<br>• ☁️ Community Cloud & MIDI Converter (22K & 15K folding)<br>• 🛡️ Native Windows background hotkey engine with debounce safety |
+| **[V8 (Electron)](V8-Electron/)** <br>*(Flagship Desktop)* | **Modern Dedicated Desktop Suite** | • Dedicated desktop app with frameless Win11 snap layout titlebar<br>• 🏝️ Dynamic Island top-of-screen floating overlay for playing in fullscreen<br>• 📝 Monaco Studio Editor with live piano-roll sync & real-time audio synthesizer preview<br>• 🌾 Auto Harvest (⚡ Spam + 👁️ Multi-Sample Vision Matching for Trees, Rocks & Bushes)<br>• 🎮 Full Assist Engine (Auto Cook, Snow Puzzle, Auto Walk, Cam Lock, Auto Jump, Build Glitch)<br>• ☁️ Community Cloud & MIDI Converter (22K & 15K folding)<br>• 🛡️ Native Windows background hotkey engine with debounce safety |
 | **[V7](V7/)** | **Full Automation & Assist Suite** | • Everything in V6, **plus** the complete in-game **Assist System**:<br>  - 🚶 Auto Walk & 📷 Cam Lock<br>  - 👨‍🍳 Auto Cook (visual heat detection)<br>  - ❄️ Snow Puzzle Mini-Game Solver<br>  - 🚜 Auto Harvest (Hold & Spam modes)<br>  - 🦘 Auto Jump<br>  - 🎣 Fish Automation & 🛠️ Build Glitch trigger |
 | **[V6](V6/)** | **Ultra-Lightweight & Focused** | • Complete MIDI Player & visual piano roll<br>• Monaco Studio Editor (1M+ lines)<br>• Community Cloud (upload/download)<br>• 22K & 15K MIDI converter<br>• Fully debloated (no OpenCV or bot dependencies) |
 
@@ -115,7 +120,7 @@ venv\Scripts\activate
 **For V8 (Flagship Electron Desktop):**
 ```bash
 pip install pydirectinput pyautogui pynput pillow mido supabase
-cd Electron
+cd V8-Electron
 npm install
 ```
 
@@ -133,7 +138,7 @@ pip install flask flask-socketio simple-websocket pydirectinput mido supabase
 
 - **To run PianiPia V8 (Dedicated Desktop App):**
   ```bash
-  cd Electron
+  cd V8-Electron
   npm start
   ```
 
@@ -160,12 +165,12 @@ From the repository root, simply run:
 ```bash
 build_v8_exe.bat
 ```
-Or inside the `Electron/` folder:
+Or inside the `V8-Electron/` folder:
 ```bash
-cd Electron
+cd V8-Electron
 build_exe.bat
 ```
-The standalone portable executable `PianiPia_V8_Portable.exe` will be generated inside `Electron/dist/`.
+The standalone portable executable `PianiPia_V8_Portable.exe` will be generated inside `V8-Electron/dist/`.
 
 #### Building V6 (Python / PyInstaller)
 ```bash
@@ -197,7 +202,7 @@ Heartopia-Instrument-MIDI/
 ├── .github/
 │   └── workflows/
 │       └── build.yml           # Automated GitHub Actions build workflow
-├── Electron/                   # PianiPia V8 (Electron Desktop Application)
+├── V8-Electron/               # PianiPia V8 (Electron Desktop Application)
 │   ├── main.js                 # Electron main process & IPC coordinator
 │   ├── python_bridge.py        # Python automation & playback engine
 │   ├── package.json            # Electron dependencies & builder config
@@ -222,7 +227,6 @@ Heartopia-Instrument-MIDI/
 ├── images/                     # Screenshot previews for README & documentation
 ├── build_v8_exe.bat            # Root launcher for building V8 executable
 ├── PianiPiaV6.exe              # Pre-compiled V6 standalone executable
-├── Heartopia MIDI V5.2.exe     # Legacy V5.2 executable
 └── README.md
 ```
 
@@ -275,13 +279,19 @@ If you run the pre-compiled `.exe`, antivirus programs (Windows Defender, Avast,
 2. **Unsigned Executable:** Independent open-source projects lack expensive code-signing certificates.
 3. **PyInstaller Packing:** PyInstaller binaries are commonly flagged by heuristic scanners.
 
-> 💡 **Best Solution:** Since PianiPia is **Open Source**, you can run directly from Python source (`python V6/PianiPiaV6.py` or `python V7/PianiPiaV7.py` or `npm start` in `Electron/`). Running raw Python scripts bypasses binary scanner false positives completely!
+> 💡 **Best Solution:** Since PianiPia is **Open Source**, you can run directly from Python source (`python V6/PianiPiaV6.py` or `python V7/PianiPiaV7.py` or `npm start` in `V8-Electron/`). Running raw Python scripts bypasses binary scanner false positives completely!
 
 #### 🛡️ Complete Transparency via GitHub Actions CI
 To give everyone 100% peace of mind:
 * This project includes an automated GitHub Actions build workflow at [`.github/workflows/build.yml`](.github/workflows/build.yml).
 * Every executable can be built and verified directly on GitHub's clean cloud virtual machines.
 * You can fork this repository, click **Run workflow** under the **Actions** tab, and download your own independently compiled `.exe` artifact directly from GitHub.
+
+<p align="center">
+  <a href="https://github.com/KaleidSkylark/Heartopia-Instrument-MIDI/actions">
+    <img src="https://img.shields.io/badge/GitHub%20Actions-View%20%26%20Download%20Builds-2088FF?style=for-the-badge&logo=githubactions&logoColor=white" alt="View GitHub Actions">
+  </a>
+</p>
 
 If you prefer using the `.exe`:
 1. Create a dedicated folder (e.g. `C:\Games\PianiPia`).
@@ -292,7 +302,7 @@ If you prefer using the `.exe`:
 
 ### 📖 How to Use
 
-1. **Launch:** Run `build_v8_exe.bat` or `npm start` in `Electron/` (or run `python V6/PianiPiaV6.py` / `python V7/PianiPiaV7.py`). For V6/V7, the browser UI opens at `http://127.0.0.1:5000`.
+1. **Launch:** Run `build_v8_exe.bat` or `npm start` in `V8-Electron/` (or run `python V6/PianiPiaV6.py` / `python V7/PianiPiaV7.py`). For V6/V7, the browser UI opens at `http://127.0.0.1:5000`.
 2. **Get Songs:**
    * **☁️ Online Tab:** Search the cloud library and click download.
    * **🎹 Add / Convert Tab:** Drag and drop `.mid` files to automatically generate 22K or 15K scripts.
