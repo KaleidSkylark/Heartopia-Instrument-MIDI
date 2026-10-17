@@ -6,9 +6,11 @@
   "scripts": {
     "start": "electron .",
     "dev": "electron . --dev",
-    "build:exe": "electron-builder --win portable",
+    "build:engine": "pyinstaller --noconfirm --onedir --console --distpath ./engine-dist --name engine python_bridge.py && powershell -Command \"if (Test-Path engine) { Remove-Item engine -Recurse -Force }; Move-Item engine-dist/engine ./engine; Remove-Item engine-dist -Recurse -Force -ErrorAction SilentlyContinue; Remove-Item build -Recurse -Force -ErrorAction SilentlyContinue\"",
+    "build:exe": "npm run build:engine && electron-builder --win portable",
     "build:dir": "electron-builder --dir",
-    "build:installer": "electron-builder --win nsis"
+    "build:installer": "npm run build:engine && electron-builder --win nsis",
+    "build:all": "npm run build:engine && electron-builder --win"
   },
   "author": "KaleidSkylark",
   "license": "MIT",
@@ -31,6 +33,7 @@
     },
     "files": [
       "main.js",
+      "midi_converter.js",
       "python_bridge.py",
       "config.json",
       "favorites.json",
@@ -48,6 +51,11 @@
       "heartopia_modules/**/*"
     ],
     "extraResources": [
+      {
+        "from": "engine",
+        "to": "engine",
+        "filter": ["**/*"]
+      },
       {
         "from": "../CookingReference",
         "to": "CookingReference",

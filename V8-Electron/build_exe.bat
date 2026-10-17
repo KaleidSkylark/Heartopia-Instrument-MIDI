@@ -26,8 +26,26 @@ if %ERRORLEVEL% neq 0 (
     exit /b 1
 )
 
-:: 2. Ensure all dependencies are installed
-echo [1/2] Checking and installing dependencies...
+:: 2. Ensure standalone Python engine is compiled
+if not exist "%~dp0engine\engine.exe" (
+    echo [1/3] Compiling Standalone Python Engine (PyInstaller)...
+    where pyinstaller >nul 2>&1
+    if !ERRORLEVEL! equ 0 (
+        call pyinstaller --noconfirm --onedir --console --distpath ./engine-dist --name engine python_bridge.py
+        if exist engine-dist\engine (
+            if exist engine rmdir /s /q engine
+            move engine-dist\engine .\engine
+            if exist engine-dist rmdir /s /q engine-dist
+            if exist build rmdir /s /q build
+            if exist engine.spec del /f /q engine.spec
+        )
+    ) else (
+        echo [INFO] PyInstaller not in PATH, will package with current engine directory.
+    )
+)
+
+:: 3. Ensure all dependencies are installed
+echo [2/3] Checking and installing dependencies...
 call npm install
 if %ERRORLEVEL% neq 0 (
     echo [ERROR] npm install encountered an error.
@@ -35,9 +53,9 @@ if %ERRORLEVEL% neq 0 (
     exit /b 1
 )
 
-:: 3. Build standalone Windows executables (Portable + Fast Installer)
+:: 4. Build standalone Windows executables (Portable + Fast Installer)
 echo.
-echo [2/2] Packaging PianiPia V8 into standalone executables...
+echo [3/3] Packaging PianiPia V8 into standalone executables...
 call npx electron-builder --win
 if %ERRORLEVEL% equ 0 (
     echo.

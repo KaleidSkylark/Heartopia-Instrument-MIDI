@@ -3,6 +3,7 @@ const path = require('path');
 const fs = require('fs');
 const { spawn } = require('child_process');
 const { createClient } = require('@supabase/supabase-js');
+const { convertMidiFilesNode } = require('./midi_converter');
 
 // ─── Process & Cache Configuration ───
 try {
@@ -163,14 +164,39 @@ function initSupabase() {
 }
 
 // ─── Python Process Bridge ───
+function getPythonEngineCommand() {
+  const candidates = [
+    path.join(process.resourcesPath, 'engine', 'engine.exe'),
+    path.join(process.resourcesPath, 'app.asar.unpacked', 'engine', 'engine.exe'),
+    path.join(__dirname, 'engine', 'engine.exe'),
+    path.join(__dirname, '..', 'engine', 'engine.exe'),
+    path.join(process.resourcesPath, 'engine.exe')
+  ];
+
+  for (const c of candidates) {
+    try {
+      if (fs.existsSync(c)) {
+        console.log(`[PianiPia V8] Found bundled standalone Python engine: ${c}`);
+        return { command: c, args: [], isBinary: true };
+      }
+    } catch (e) {}
+  }
+
+  // Fallback to local python script for development
+  const scriptPath = resolveAppPath('python_bridge.py');
+  return { command: 'python', args: [scriptPath], isBinary: false };
+}
+
 function startPythonBridge() {
   if (pythonProcess) return;
 
+  const engine = getPythonEngineCommand();
   const scriptPath = resolveAppPath('python_bridge.py');
-  const workingDir = path.dirname(scriptPath);
+  const workingDir = engine.isBinary ? path.dirname(engine.command) : path.dirname(scriptPath);
 
-  pythonProcess = spawn('python', [scriptPath], {
+  pythonProcess = spawn(engine.command, engine.args, {
     cwd: workingDir,
+    windowsHide: true,
     stdio: ['pipe', 'pipe', 'pipe'],
     env: { ...process.env, PYTHONIOENCODING: 'utf-8', PYTHONLEGACYWINDOWSSTDIO: 'utf-8' }
   });
@@ -981,6 +1007,21 @@ function setupIPC() {
     if (!data || !data.files || data.files.length === 0) {
       return { ok: false, error: 'No files provided for conversion.' };
     }
+
+    try {
+      // 1. Primary: Native standalone JavaScript MIDI conversion (0 dependencies, 100% reliable)
+      const res = convertMidiFilesNode(data.files, data.target, data.pitch, config.note_folder);
+      if (res && res.ok) {
+        return {
+          ok: true,
+          log: res.message
+        };
+      }
+    } catch (nodeErr) {
+      console.warn('[Main Converter] Native JS converter error, falling back to Python bridge:', nodeErr);
+    }
+
+    // 2. Secondary fallback: Python engine conversion
     return new Promise((resolve) => {
       const timeout = setTimeout(() => {
         if (convertResolver) {

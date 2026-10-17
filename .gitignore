@@ -32,6 +32,10 @@
 # Exclude dependencies and build output inside V8-Electron
 V8-Electron/node_modules/**
 V8-Electron/dist/**
+V8-Electron/build/**
+V8-Electron/engine-dist/**
+V8-Electron/engine/**
+!V8-Electron/engine/.gitkeep
 **/node_modules/**
 **/dist/**
 

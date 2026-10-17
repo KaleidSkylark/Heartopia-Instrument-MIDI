@@ -34,7 +34,16 @@ jobs:
       - name: Install Python Dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install pydirectinput pyautogui pynput pillow mido supabase
+          pip install pydirectinput pyautogui pynput pillow mido supabase pyinstaller
+
+      - name: Build Standalone Python Engine (PyInstaller)
+        working-directory: ./V8-Electron
+        run: |
+          pyinstaller --noconfirm --onedir --console --distpath ./engine-dist --name engine python_bridge.py
+          if (Test-Path engine) { Remove-Item -Path engine -Recurse -Force }
+          Move-Item -Path ./engine-dist/engine -Destination ./engine
+          Remove-Item -Path ./engine-dist -Recurse -Force -ErrorAction SilentlyContinue
+          Remove-Item -Path ./build -Recurse -Force -ErrorAction SilentlyContinue
 
       - name: Install Electron Dependencies
         working-directory: ./V8-Electron

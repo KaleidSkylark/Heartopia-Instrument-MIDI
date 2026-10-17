@@ -355,7 +355,16 @@ def handle_convert(files, target, pitch, note_folder):
             return
 
         logs = []
-        import mido, statistics
+        try:
+            import mido
+        except ImportError:
+            mido = None
+
+        if not mido:
+            emit("convert_result", ok=False, message="Python 'mido' package is not installed. Please use the built-in native MIDI converter.")
+            return
+
+        import statistics
 
         try:
             pitch_val = int(pitch) if pitch is not None else 0
